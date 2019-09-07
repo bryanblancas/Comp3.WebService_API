@@ -39,7 +39,9 @@ public class LoginController {
 		if(chaffing == null || pattern == null)
 			return form(); 
 		
-		/*Winnowing*/
+		/*Winnowing
+		 * THIS WILL BE A CALL TO A MICROSERVICE
+		 * */
 		
 		// Check if chaffing (certificate) already exists
 		boolean exists = checkCertificate(chaffing);
