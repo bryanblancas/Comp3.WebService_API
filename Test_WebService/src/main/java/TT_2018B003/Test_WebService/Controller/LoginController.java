@@ -21,7 +21,7 @@ public class LoginController {
 
 	@Autowired
 	LoginService loginService;
-	String ipServer = "http://10.100.64.48:8081";
+	String ipServer = "http://25.7.126.53:8081";
 	
 	// Variables for save chaffing and pattern
 	public String chaffing = "";
@@ -99,11 +99,11 @@ public class LoginController {
 			@RequestParam String name
 	) {	
 		
-		boolean isValidUser = loginService.validateUser(name, password);
+		/*boolean isValidUser = loginService.validateUser(name, password);
 		if(!isValidUser) {
 			model.put("errorMessage", "Credenciales invalidas");
 			return "/loginByForm";
-		}
+		}*/
 		
 		if(!chaffing.equals(""))
 			model.put("name", "Primer inicio de chaffing: "+name);
