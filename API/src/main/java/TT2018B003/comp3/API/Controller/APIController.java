@@ -18,12 +18,13 @@ public class APIController {
 	@GetMapping(value = "/chaffing/{chaffing}")
 	public String setChaffing(@PathVariable String chaffing) {
 		winnowingService.setChaffing(chaffing);
-		return "ok";
+		return winnowingService.getChaffing();
 	}
 	
 	@GetMapping(value = "/pattern/{pattern}")
-	public void setPattern(@PathVariable String pattern) {
+	public String setPattern(@PathVariable String pattern) {
 		winnowingService.setPattern(pattern);
+		return winnowingService.getPattern();
 	}
 	
 	@GetMapping(value = "/winnowing")

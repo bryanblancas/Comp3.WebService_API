@@ -23,4 +23,14 @@ public class WinnowingService implements IWinnowing {
 		return "Hola";
 	}
 
+	@Override
+	public String getChaffing() {
+		return chaffing;
+	}
+
+	@Override
+	public String getPattern() {
+		return pattern;
+	}
+
 }
