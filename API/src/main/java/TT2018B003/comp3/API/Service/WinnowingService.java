@@ -20,7 +20,7 @@ public class WinnowingService implements IWinnowing {
 
 	@Override
 	public String makeWinnowing() {
-		return "Hola";
+		return chaffing+":"+pattern;
 	}
 
 	@Override
