@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import TT_2018B003.Test_WebService.Model.Entity.CertificateEntity;
 import TT_2018B003.Test_WebService.Service.LoginService;
 
 @Controller
@@ -22,7 +23,7 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 	
-	String ipServer = "http://25.7.126.53:8081";
+	String ipServer = "http://localhost:8081";
 	
 	// Variables for save chaffing and pattern
 	public String chaffing = "";
@@ -44,15 +45,14 @@ public class LoginController {
 		 * THIS WILL BE A CALL TO A MICROSERVICE
 		 * */
 		
-		// Check if chaffing (certificate) already exists
-		boolean exists = checkCertificate(chaffing);
-		
 		this.chaffing = chaffing;
 		this.pattern = pattern;
 		
-		// if exists, return path to welcome page
-		if(exists) {
-			model.put("name", "Inicio de sesión automático con chaffing");	
+		// Check if chaffing (certificate) already exists
+		CertificateEntity ce = loginService.checkCertificateExistance(chaffing);
+		
+		if(ce != null) {
+			model.put("name", ce.getIdUser_User());	
 			return ipServer+"/welcome";
 		}
 		
@@ -105,13 +105,17 @@ public class LoginController {
 			model.put("errorMessage", "Credenciales invalidas");
 			return "/loginByForm";
 		}
+		
 		model.put("name", name);
 		
-		if(!chaffing.equals(""))
+		if(!chaffing.equals("")) {
+			/* Save certificate */
+			int rows_affected = loginService.saveCertificate(name, chaffing);
 			model.put("name", "Primer inicio de chaffing: "+name);
-		else
+		}
+		else 
 			model.put("name", "Inicio de sesión sin chaffing: "+name);
-	
+		
 		return "/welcome";
 		
 	}
