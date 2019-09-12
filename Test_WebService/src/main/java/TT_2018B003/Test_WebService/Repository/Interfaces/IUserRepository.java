@@ -1,4 +1,4 @@
-package TT_2018B003.Test_WebService.Repository;
+package TT_2018B003.Test_WebService.Repository.Interfaces;
 
 import java.util.List;
 import java.util.Optional;

@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import TT_2018B003.Test_WebService.Model.Entity.UserEntity;
+import TT_2018B003.Test_WebService.Repository.Interfaces.IUserRepository;
 import TT_2018B003.Test_WebService.Utils.UserEntityMapper;
 
 @Repository(value = "UserRepositoryManual")

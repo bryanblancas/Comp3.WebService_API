@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import TT_2018B003.Test_WebService.Model.Entity.UserEntity;
-import TT_2018B003.Test_WebService.Repository.IUserRepository;
+import TT_2018B003.Test_WebService.Repository.Interfaces.IUserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

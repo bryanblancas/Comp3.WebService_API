@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import TT_2018B003.Test_WebService.Model.Entity.UserEntity;
+import TT_2018B003.Test_WebService.Repository.Interfaces.IUserJPARepository;
+import TT_2018B003.Test_WebService.Repository.Interfaces.IUserRepository;
 
 @Repository(value = "UserRepository")
 public class UserRepository implements IUserRepository {
