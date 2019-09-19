@@ -1,23 +1,3 @@
-<!--
-<!DOCTYPE html>
-
-<html>
-	<head>
-		
-		<title>Inicio - Veterinaria</title>
-		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-		<link type='text/css' rel='stylesheet' href='../css/materialize.min.css'  media='screen,projection'/>
-		<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
-
-	</head>
-	
-	<body>
-
-    	<script type='text/javascript' src='../js/materialize.min.js'></script>
-    </body>
-</html>
-
--->
 
 <%@ page language='java' contentType='text/html; charset=UTF-8'
     pageEncoding='UTF-8'%>
