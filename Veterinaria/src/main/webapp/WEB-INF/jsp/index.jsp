@@ -20,12 +20,12 @@
 				<a id='logo-container' href='#' class='brand-logo'>Veterinaria</a>
 				<ul class='right hide-on-med-and-down'>
 					<li><a href='/login'>Iniciar Sesión</a></li>
-					<li><a href='/logout'>Registrar</a></li>
+					<li><a href='/logup'>Registrar</a></li>
 				</ul>
 
 				<ul id='nav-mobile' class='sidenav'>
 					<li><a href='/login'>Iniciar Sesión</a></li>
-					<li><a href='/logout'>Registrar</a></li>
+					<li><a href='/logup'>Registrar</a></li>
 				</ul>
 				<a href='#' data-target='nav-mobile' class='sidenav-trigger'><i class='material-icons'>menu</i></a>
 			</div>
