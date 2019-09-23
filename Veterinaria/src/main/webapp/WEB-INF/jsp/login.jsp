@@ -42,6 +42,7 @@
 				<div class='col s12 m6 offset-m3'>
 
 					<h4 class='brand-logo center'><p class='chido'>Inicia sesión</p></h4>
+					<p class="center blue-text">${infoMessage}</p>
 					<br>
 					
 					<form action='/loginByForm' method='POST' class='col s12'>

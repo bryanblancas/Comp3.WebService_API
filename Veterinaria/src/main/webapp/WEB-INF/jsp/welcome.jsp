@@ -14,7 +14,7 @@
 	</head>
 	<body class='grey lighten-2'>
 
-		${idUser}
+		${user_data_session.toString()}
 		
 		<a href='/logout'>Cerrar Sesión</a>
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.UserEntity;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.User_dataEntity;
@@ -67,9 +66,11 @@ public class LogupController {
 			rows_affected = logupService.saveUser(user_data, client);
 		}
 		
-		if(rows_affected != 0)
+		if(rows_affected != 0) {
+			model.addAttribute("infoMessage", "Ya puedes iniciar sesión");
 			return "/login";
-		
+		}
+			
 		model.addAttribute("errorMessage", "No se pudo guardar. Intenta de nuevo más tarde");
 		return "/logup";
 		

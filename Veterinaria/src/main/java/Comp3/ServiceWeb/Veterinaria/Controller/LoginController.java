@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import Comp3.ServiceWeb.Veterinaria.Model.UserDataSession;
 import Comp3.ServiceWeb.Veterinaria.Services.LoginService;
 
 @Controller
 @Scope("session")
-@SessionAttributes("idUser")
+@SessionAttributes("user_data_session")
 public class LoginController {
 	
 	@Autowired
@@ -32,14 +33,19 @@ public class LoginController {
 	@RequestMapping(value = "/loginByForm", method = RequestMethod.POST)
 	public String loginByForm(ModelMap model, @RequestParam String idUser, @RequestParam String password) {
 		
-		if(!loginService.validateCredentials(idUser, password)) {
+		UserDataSession userdatasession = loginService.validateCredentials(idUser, password);
+		
+		if(userdatasession == null) {
 			model.addAttribute("errorMessage", "Credenciales inválidas");
 			return "/login";
 		}
 		
-		model.addAttribute("idUser", idUser);
+		model.addAttribute("user_data_session", userdatasession);		
+		if(userdatasession.getType() == 1)
+			return "/welcome";
 		return "/welcome";
 	}
+	
 	
 	@RequestMapping(value = "/welcome")
 	public String showWelcomePage(@ModelAttribute("idUser") String idUser) {
