@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import Comp3.ServiceWeb.Veterinaria.Model.UserDataSession;
+
 @Controller
 public class GeneralController {
 
@@ -16,8 +18,8 @@ public class GeneralController {
 	
 	@RequestMapping("/hola")
 	@ResponseBody
-	public String nada(@SessionAttribute("idUser") String idUser) {
-		return idUser;
+	public String nada(@SessionAttribute("user_data_session") UserDataSession userdatasession) {
+		return userdatasession.toString();
 	}
 	
 	

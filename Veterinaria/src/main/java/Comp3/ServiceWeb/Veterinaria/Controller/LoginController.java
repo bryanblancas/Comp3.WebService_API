@@ -1,44 +1,152 @@
 package Comp3.ServiceWeb.Veterinaria.Controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import Comp3.ServiceWeb.Veterinaria.Model.UserDataSession;
+import Comp3.ServiceWeb.Veterinaria.Model.Entity.CertificateEntity;
 import Comp3.ServiceWeb.Veterinaria.Services.LoginService;
 
 @Controller
-@Scope("session")
+//@Scope("session")
 @SessionAttributes("user_data_session")
 public class LoginController {
 	
 	@Autowired
 	LoginService loginService;
 	
+	// Variables to save chaffing
+	private String certificate = null;
+	
+	
 	/*
 	 * THIS IS THE PATH WHICH THE EXTENSION WILL SCAN
 	 * */
-	@RequestMapping("/login")
-	public String login() {
-		return "login";
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(
+			ModelMap model,
+			@RequestHeader(name = "Chaffing", required = false) String chaffing, 
+			@RequestHeader(name = "Pattern", required = false) String pattern
+	) {
+		
+		String ipServer = "";
+		/*
+		 *  Check if chaffing and pattern have arrived with the request
+		 */
+		if(chaffing == null || pattern == null)
+			return "/login";
+		
+		/*
+		 * At this point, it's supposed to exist chaffing and pattern
+		 * So the first step is make a call to winnowing process to get the certificate
+		 */
+		/*
+		 * Winnowing process doesn't exist yet, so certificate will be equals to certificate
+		 */
+		this.certificate = chaffing;
+		
+		
+		/*
+		 *  Check if certificate already exists
+		 */
+		CertificateEntity ce = loginService.checkCertificateExistance(certificate);
+		
+		/*
+		 * If certificate exists, sessionvariable user_data_session is setting
+		 * and the user is redirect to the welcome page
+		 * 
+		 * If certificate doesn't exist, the user will be redirect to login form
+		 * to link the certificate with his idUser 
+		 */
+		if(ce != null) {
+			UserDataSession userdatasession = loginService.getUserDataSessionById(ce.getUser_data_idUser());
+			model.addAttribute("user_data_session", userdatasession);
+			ipServer = getIpServer()+"/welcome";
+		}
+		else 
+			ipServer = getIpServer()+"/showForm";
+		
+		model.addAttribute("ipToRedirect", ipServer);
+		return "/trapView";
+		
+	}
+	
+	@RequestMapping("/showForm")
+	public String showForm(ModelMap model) {
+		model.addAttribute("infoMessage", "Inicia sesión para guardar tu certificado");
+		return "/login";
 	}
 	
 	
 	@RequestMapping(value = "/loginByForm", method = RequestMethod.POST)
 	public String loginByForm(ModelMap model, @RequestParam String idUser, @RequestParam String password) {
 		
+		/*
+		 * Validate credentials of the user, if userdatasession is equal to null
+		 * that means that the credentials are wrong 
+		 */
 		UserDataSession userdatasession = loginService.validateCredentials(idUser, password);
 		
 		if(userdatasession == null) {
 			model.addAttribute("errorMessage", "Credenciales inválidas");
 			return "/login";
 		}
+		
+		/*
+		 * Otherwise, user exists and his credentials were introduced correctly 
+		 */
+		
+		
+		/*
+		 * If certificate class variable is different to null, that means certificate has been
+		 * initialized in login(), so this is the first time that certificate comes to this WebService
+		 */
+		if(this.certificate != null) {
+			
+			/*
+			 * At this point, we now that this certificate doesn't exist, so we are going to save it
+			 * rows_affected cases:
+			 * 	0 -> An error occurred saving the cert in mysql
+			 * 	-1 -> User have previously linked to a certificate
+			 * 	else -> every little thing is ok 
+			 * 
+			 * At the end certificate class variable is reset
+			 * */
+			
+			CertificateEntity ce = new CertificateEntity(certificate, userdatasession.getUser().getIdUser());
+			
+			int rows_affected = loginService.saveCertificate(ce);
+			if(rows_affected == 0) {
+				model.addAttribute("errorMessage", "No se pudo vincular el certificado");
+				return "/login";
+			}
+			else if(rows_affected == -1) {
+				model.addAttribute("errorMessage", "El usuario "+ce.getUser_data_idUser()+" ya tiene un certificado vinculado");
+				return "/login";
+			}
+			this.certificate = null;
+		}
+		
+		/*
+		 * If the process arrived to this point, there's two options
+		 * 	1. certificate is equal to null, which means that normal login is happening
+		 * 	2. certificate was different to null and it was possible to save it
+		 * 
+		 * Both cases means that login was successfully done, so userdatasession variable is settled down
+		 * and depends of type of user the next view
+		 */
 		
 		model.addAttribute("user_data_session", userdatasession);		
 		if(userdatasession.getType() == 1)
@@ -48,9 +156,9 @@ public class LoginController {
 	
 	
 	@RequestMapping(value = "/welcome")
-	public String showWelcomePage(@ModelAttribute("idUser") String idUser) {
+	public String showWelcomePage(@ModelAttribute("user_data_session") UserDataSession userdatasession) {
 		
-		if(idUser.equals(""))
+		if(userdatasession.getType() == 0)
 			return "redirect:/index";
 			
 		return "/welcome";
@@ -59,10 +167,29 @@ public class LoginController {
 	
 	@RequestMapping(value = "/logout")
 	public String logout(ModelMap model) {
+		UserDataSession cs = new UserDataSession();
+		cs.setType(0);
 		
-		model.addAttribute("idUser", "");
+		model.addAttribute("user_data_session", cs);
 		return "redirect:/index";
 	
 	}
+	
+	// Method to get ip of this server
+	public static String getIpServer() {
+		Properties prop = new Properties();
+		String ipServer = null;
+		InputStream file = null;
+		try {
+			file = new FileInputStream("src/main/resources/server.properties");
+			prop.load(file);
+			ipServer = prop.getProperty("myserver.ip");
+		}catch(IOException e) {
+			System.out.println("Error in LoginCOntroller.getIpServer()");
+			e.printStackTrace();
+		}
+		return ipServer;
+	}
+		
 	
 }
