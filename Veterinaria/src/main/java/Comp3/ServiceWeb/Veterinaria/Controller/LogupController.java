@@ -2,7 +2,9 @@ package Comp3.ServiceWeb.Veterinaria.Controller;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,9 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.UserEntity;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.User_dataEntity;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.VetEntity;
+import Comp3.ServiceWeb.Veterinaria.Services.LogupService;
 
 @Controller
 public class LogupController {
+	
+	@Autowired
+	LogupService logupService;
+	
 	
 	@RequestMapping("/logup")
 	public String showLogupPage(){
@@ -20,17 +27,18 @@ public class LogupController {
 	}
 	
 	@RequestMapping("/logupForm")
-	@ResponseBody
-	public String registerUser(@RequestParam Map<String, String> allParams) {
+	public String registerUser(ModelMap model, @RequestParam Map<String, String> allParams) {
 		/*
 		 * 
 		 * Maybe some good validation here, that will be great!
 		 * 
 		 * 
 		 */
+		
 		User_dataEntity user_data = null;
 		VetEntity vet = null;
-		UserEntity user = null;
+		UserEntity client = null;
+		int rows_affected = 0;
 		
 		user_data = new User_dataEntity(
 				allParams.get("idUser"),
@@ -43,14 +51,28 @@ public class LogupController {
 				allParams.get("email")
 		);
 		
-		if(allParams.get("isVet") != null)
-			vet = new VetEntity(allParams.get("idUser"), allParams.get("password"));
-		else
-			user = new UserEntity(allParams.get("idUser"), allParams.get("password"));
+
+		boolean existUser = logupService.existUser(user_data);
+		if(existUser) {
+			model.addAttribute("errorMessage", "Ese nombre de usuario ya existe");
+			return "/logup";
+		}
 		
-		if(user == null)
-			return "Es un veterinario " + user_data.toString() + "\n"+vet.toString();
-		return "No es un veterinario " + user_data.toString() + "\n"+user.toString();
+		if(allParams.get("isVet") != null) {
+			vet = new VetEntity(allParams.get("idUser"), allParams.get("password"));
+			rows_affected = logupService.saveUser(user_data, vet);
+		}
+		else {
+			client = new UserEntity(allParams.get("idUser"), allParams.get("password"));
+			rows_affected = logupService.saveUser(user_data, client);
+		}
+		
+		if(rows_affected != 0)
+			return "/login";
+		
+		model.addAttribute("errorMessage", "No se pudo guardar. Intenta de nuevo más tarde");
+		return "/logup";
+		
 	}
 	
 }

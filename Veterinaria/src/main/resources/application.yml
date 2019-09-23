@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/Test_WebService
+    url: jdbc:mysql://localhost:3306/veterinaria
     password: 1234
     username: root
     driver-class-name: "com.mysql.jdbc.Driver"

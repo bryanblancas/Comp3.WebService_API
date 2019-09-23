@@ -185,6 +185,7 @@
 				<div class="row">
 					<div class="col s12">
 						<h5 class='brand-logo center'><p class='chido'>Información de la cuenta</p></h5>
+						<p class='red-text center'>${errorMessage}</p>
 					</div>
 				</div>
 				
