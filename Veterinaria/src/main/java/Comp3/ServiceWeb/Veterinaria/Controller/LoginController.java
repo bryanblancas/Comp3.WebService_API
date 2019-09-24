@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +21,7 @@ import Comp3.ServiceWeb.Veterinaria.Model.Entity.CertificateEntity;
 import Comp3.ServiceWeb.Veterinaria.Services.LoginService;
 
 @Controller
-//@Scope("session")
+@Scope("session")
 @SessionAttributes("user_data_session")
 public class LoginController {
 	
