@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.client.RestTemplate;
 
+import Comp3.ServiceWeb.API.Model.WinnowingModel;
 import Comp3.ServiceWeb.Veterinaria.Model.UserDataSession;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.CertificateEntity;
 import Comp3.ServiceWeb.Veterinaria.Services.LoginService;
@@ -30,7 +32,7 @@ public class LoginController {
 	
 	// Variables to save chaffing
 	private String certificate = null;
-	
+	private final String ipAPI = "http://localhost:8080/API/v1/winnowing";
 	
 	/*
 	 * THIS IS THE PATH WHICH THE EXTENSION WILL SCAN
@@ -53,6 +55,15 @@ public class LoginController {
 		 * At this point, it's supposed to exist chaffing and pattern
 		 * So the first step is make a call to winnowing process to get the certificate
 		 */
+		/*
+		RestTemplate restTemplate = new RestTemplate();
+		
+		WinnowingModel data = new WinnowingModel();
+		data.setChaffing(chaffing);
+		data.setPattern(pattern);
+		
+		certificate = restTemplate.postForObject(ipAPI, data, String.class);
+		*/
 		/*
 		 * Winnowing process doesn't exist yet, so certificate will be equals to certificate
 		 */
