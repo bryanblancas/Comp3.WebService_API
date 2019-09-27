@@ -32,7 +32,6 @@ public class LoginController {
 	
 	// Variables to save chaffing
 	private String certificate = null;
-	private final String ipAPI = "http://localhost:8080/API/v1/winnowing";
 	
 	/*
 	 * THIS IS THE PATH WHICH THE EXTENSION WILL SCAN
@@ -62,11 +61,14 @@ public class LoginController {
 		data.setChaffing(chaffing);
 		data.setPattern(pattern);
 		
-		certificate = restTemplate.postForObject(ipAPI, data, String.class);
+		certificate = restTemplate.postForObject(getIpAPI(), data, String.class);
 		*/
 		/*
 		 * Winnowing process doesn't exist yet, so certificate will be equals to certificate
 		 */
+		
+		System.out.println(chaffing);
+		System.out.println(pattern);
 		this.certificate = chaffing;
 		
 		
@@ -201,6 +203,22 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		return ipServer;
+	}
+	
+	// Method to get ip of API
+	public static String getIpAPI() {
+		Properties prop = new Properties();
+		String ipAPI = null;
+		InputStream file = null;
+		try {
+			file = new FileInputStream("src/main/resources/server.properties");
+			prop.load(file);
+			ipAPI = prop.getProperty("api.ip");
+		}catch(IOException e) {
+			System.out.println("Error in LoginCOntroller.getIpAPI()");
+			e.printStackTrace();
+		}
+		return ipAPI;
 	}
 		
 	
