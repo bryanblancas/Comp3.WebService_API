@@ -19,6 +19,7 @@ import javax.crypto.NoSuchPaddingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import TT2018B003.comp3.API.Utils.CipherUtilityAES;
 import TT2018B003.comp3.API.Utils.CipherUtilityRSA;
 
 @Service
@@ -26,6 +27,9 @@ public class CryptoService {
 	
 	@Autowired
 	CipherUtilityRSA rsa;
+	
+	@Autowired
+	CipherUtilityAES aes;
 	
 	public String decryptAESKey(String encryptedMessage) {
 		
@@ -48,6 +52,12 @@ public class CryptoService {
 		}
         
         return decryptedMessage;
+	}
+	
+	public String decryptPattern(String encryptedPattern, String aesKey) {
+		aes.setKey(aesKey);
+		String pattern = aes.decrypt(encryptedPattern);
+		return pattern;
 	}
 
 	public static PrivateKey getPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {

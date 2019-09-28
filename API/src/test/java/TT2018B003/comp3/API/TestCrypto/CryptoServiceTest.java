@@ -16,7 +16,6 @@ public class CryptoServiceTest {
 	@Autowired
 	CryptoService cryptoService;
 	
-	
 	@Test
 	public void decryptTest() {
 		String encryptedMessage = "woafjaX37sb977td12+KpMyUTSujICKPAM+VCG2ouqz409/YQYPtcWS8SLpky4RCli1yctvbjrGVUWc3JQAGf3oqNHLMr4SOtlLF2iatPrFLTdZyYtbSiqLvC0dZx3bxhgIohp/MgxaRawszs9+RG+kmPXg/Y/zCqG+eQQqVyicECn9rHeJ6CXUFvEDM783S4mtiieyHHw6NKkyznDkXk6LPPLXDJYGGraZjwU8z0zWaPAxqH9toKkjubbZeG2iMRRr1LVh9W03abXFrgOpVcBtd1oakk8hKEtBWIpishni2hsQ3J4ju1Eu9sBDjjb6FxnwdPONqkz1agA3K9IN+EQ==";
@@ -24,4 +23,15 @@ public class CryptoServiceTest {
 		
 		Assert.assertEquals("chiale", decryptedMessage);
 	}
+	
+	@Test
+	public void decryptPattern() {
+		String aesKey = "chialechialechia";
+		String encryptedPattern = "U2FsdGVkX19FYn7+cApP7HTacvZoUEbfjYsIv1NqEdM=";
+		
+		String pattern = cryptoService.decryptPattern(encryptedPattern, aesKey);
+		
+		Assert.assertEquals("hola mundo", pattern);
+	}
+	
 }

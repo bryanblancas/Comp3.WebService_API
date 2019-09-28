@@ -1,8 +1,10 @@
 package TT2018B003.comp3.API.Service;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+//@Scope("Prototype")
 public class WinnowingService implements IWinnowing {
 
 	private String chaffing;
