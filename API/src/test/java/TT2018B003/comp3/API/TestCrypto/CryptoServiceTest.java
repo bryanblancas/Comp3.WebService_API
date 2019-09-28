@@ -19,8 +19,8 @@ public class CryptoServiceTest {
 	
 	@Test
 	public void decryptTest() {
-		String encryptedMessage = "dAMyzxS4wcZMXb5QEJ9Tl9HhwLNM3iDRYokGRqY3bsRcJSvlwTzdMBAYQ1Q9GkioBWqj25mFwt69tkMlv4MV/eVzabApQ2cXoch7Am2nyrZIv/GPgvauzLZcQsbjkgq2hNJ4Xbf6E4pIcP6V7AbuQjP6ER2Bo/Mz9QBnnNuZOXdMSIbPmj/QWEM1rcPSMkry9mAaJPGlU3ssFUGcVdqo4uN32IOhNG6KqJZnmf1yNfwzKQv/kBIEHc2SFRS29NqhU8SizthtT49F1fn47fSPu4JDtLqp0UkjBI0KovjlufpM7FjsueCbqiMbP7m+Atn8Xu7ch1LyadEMmKxb36isFg==";
-		String decryptedMessage = cryptoService.decrypt(encryptedMessage);
+		String encryptedMessage = "woafjaX37sb977td12+KpMyUTSujICKPAM+VCG2ouqz409/YQYPtcWS8SLpky4RCli1yctvbjrGVUWc3JQAGf3oqNHLMr4SOtlLF2iatPrFLTdZyYtbSiqLvC0dZx3bxhgIohp/MgxaRawszs9+RG+kmPXg/Y/zCqG+eQQqVyicECn9rHeJ6CXUFvEDM783S4mtiieyHHw6NKkyznDkXk6LPPLXDJYGGraZjwU8z0zWaPAxqH9toKkjubbZeG2iMRRr1LVh9W03abXFrgOpVcBtd1oakk8hKEtBWIpishni2hsQ3J4ju1Eu9sBDjjb6FxnwdPONqkz1agA3K9IN+EQ==";
+		String decryptedMessage = cryptoService.decryptAESKey(encryptedMessage);
 		
 		Assert.assertEquals("chiale", decryptedMessage);
 	}
