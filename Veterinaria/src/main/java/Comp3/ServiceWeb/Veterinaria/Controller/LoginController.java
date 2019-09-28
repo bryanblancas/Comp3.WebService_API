@@ -54,7 +54,7 @@ public class LoginController {
 		 * At this point, it's supposed to exist chaffing and pattern
 		 * So the first step is make a call to winnowing process to get the certificate
 		 */
-		/*
+		
 		RestTemplate restTemplate = new RestTemplate();
 		
 		WinnowingModel data = new WinnowingModel();
@@ -62,15 +62,15 @@ public class LoginController {
 		data.setPattern(pattern);
 		
 		certificate = restTemplate.postForObject(getIpAPI(), data, String.class);
-		*/
+		System.out.println(certificate);
 		/*
 		 * Winnowing process doesn't exist yet, so certificate will be equals to certificate
 		 */
-		
+		/*
 		System.out.println(chaffing);
 		System.out.println(pattern);
 		this.certificate = chaffing;
-		
+		*/
 		
 		/*
 		 *  Check if certificate already exists
