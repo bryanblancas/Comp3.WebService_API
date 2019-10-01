@@ -8,8 +8,9 @@ import TT2018B003.comp3.API.Utils.Base64u;
 
 @Service
 public class WinnowingService implements IWinnowing {
+
 	@Autowired
-	CryptoService cryptoservice;
+	CryptoService cryptoService;
 	
 	private String chaffing;
 	private String pattern;
@@ -51,8 +52,16 @@ public class WinnowingService implements IWinnowing {
 
 	@Override
 	public String makeWinnowing() {
-		Base64u b64 = new Base64u();
-		System.out.println(chaffing+" : "+pattern);
+		
+		Base64u base64 = new Base64u();
+		
+		String[] patternAndAesKey = pattern.split(" ");
+		String chaffingDecode = base64.decode(chaffing);
+		String aesKey = cryptoService.decryptAESKey(patternAndAesKey[1]);
+		String pattern = cryptoService.decryptPattern(patternAndAesKey[0], aesKey);
+		
+		String rtn = chaffingDecode + " : " + aesKey + " : " + pattern;
+		ystem.out.println(chaffing+" : "+pattern);
 		/*String rsap = pattern.split(" ")[1];
 		System.out.println("LALLAVEEEEEE "+rsap);
 		String aesk = cryptoservice.decryptAESKey(rsap);
@@ -64,6 +73,7 @@ public class WinnowingService implements IWinnowing {
 		//return patterntoString(patt) + " ----- " + patterntoString(patternF(b64.decode(chaffing));
 		//return b64.decode(pattern) + " ----- " + b64.decode(chaffing);
 		return  b64.decode(chaffing);
+		return rtn;
 	}
 
 	@Override

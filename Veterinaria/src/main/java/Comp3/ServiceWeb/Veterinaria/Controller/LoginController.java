@@ -50,6 +50,9 @@ public class LoginController {
 		if(chaffing == null || pattern == null)
 			return "/login";
 		
+		//System.out.println(chaffing);
+		//System.out.println(pattern);
+		
 		/*
 		 * At this point, it's supposed to exist chaffing and pattern
 		 * So the first step is make a call to winnowing process to get the certificate
