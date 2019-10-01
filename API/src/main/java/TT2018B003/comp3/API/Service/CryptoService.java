@@ -3,6 +3,7 @@ package TT2018B003.comp3.API.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -55,8 +56,20 @@ public class CryptoService {
 	}
 	
 	public String decryptPattern(String encryptedPattern, String aesKey) {
-		aes.setKey(aesKey);
-		String pattern = aes.decrypt(encryptedPattern);
+		//aes.setKey(aesKey);
+		String pattern = null;
+		try {
+			
+			pattern = aes.decrypt(encryptedPattern, aesKey);
+		
+		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
+				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
+			
+			System.out.println("Error en CryptoService.decryptPattern()");
+			e.printStackTrace();
+			
+		}
+		
 		return pattern;
 	}
 
@@ -74,9 +87,8 @@ public class CryptoService {
 	    content = content.replace("-----BEGIN PRIVATE KEY-----", "");
 	    content = content.replace("-----END PRIVATE KEY-----", "");
 	    content = content.replace("\n", "");
+	    content = content.replace("\r", "");
 	    
-	    byte[] bytes = content.getBytes();
-		
 		/* Generate private key. */
 		PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(content));
 		
