@@ -74,9 +74,8 @@ public class CryptoService {
 	    content = content.replace("-----BEGIN PRIVATE KEY-----", "");
 	    content = content.replace("-----END PRIVATE KEY-----", "");
 	    content = content.replace("\n", "");
-	    
-	    byte[] bytes = content.getBytes();
-		
+	    content = content.replace("\r", "");
+	  
 		/* Generate private key. */
 		PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(content));
 		
