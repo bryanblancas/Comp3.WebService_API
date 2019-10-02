@@ -10,8 +10,8 @@ public class TestRestAPI {
 		String url = "http://localhost:8083/API/v1/winnowing";
 
 		WinnowingModelTest data = new WinnowingModelTest();
-		data.setChaffing("bRitgdo081Jym2tkTchQ3B0MyZS46gux0TvnNh3rQaHsPaUwWb8FmqwsXGq8HAzBrWTbAmtDSNu9xLvh2thxuU+mAXxyF0ci3TwsuzpePuxLxOBcaWzMLO5SeoLhJnTPMWFoF+ksLbjPUyyuOCeMF4XE5jarmrDnY0u+3hfebJ7na5qXkVrkv1Li6pPDbmXZZ2vejtaWaw==");
-		data.setPattern("5/79vfVO9+X3f7Pot5Hff/799af32v/fd29tcuf7d/962+1/bd30v7/9uZTv/f3P8+uPP26b/Ovz/r++///1/v9/P7v+fZ1394/9f8/+df3ev//7//1f//3+/t/412f9g/+9XnO7b/+/59N///Z9/3v7b/t5Zv8vv/37797v/uW/+f2+fv++3i3eO+1+/+v/v+d0ev959w==");
+		data.setChaffing("cwwrwtFXc2JdK2qwuDFcHB5xpMbA3UtJt1c17woyOjbbgVXhq2xLGiPA4MaabDYXY2q3txfehvbYdvEfVRS8uJY2T7XQta2UvcnZrSRwG8OS2tMLPOUn5gnB1mWbhEhfKY3e8J9xIBuYcJuMRT0OA3FpXDMLajpt0t4XubsLZubjLZC1jV4cNlGFm2OcYp9vGnS1NXM=");
+		data.setPattern("U2FsdGVkX19N90qAsiwL7ZR18CuSOtyi17S83y/7cFVCT9wcUEuNYL8Wx5PHh+1XhucjZow6eniWozclaCQG9sr5xcaFbuw2pW7TZmd4cVN+fUCqiNyYLTR7SmskgOEp2cEEsABmjqyMxrPPG6J52nM2ClhPnHSlPxrCpYoJ2bMnlh0zA6Ej46WXHHFo7eY5B14w8dgpuUhkeaD7sPzvqrVHrvLM4OrpVm4rPQOgC8sJSBwJ+1XSdDIoMn4p52kDg2LX4hzCrCs+7Uao4xo8PHGVM5wpG/1l2ZWE4He1vHd+wBTZ5szjgXMEa3bljN7pYN6VK1eMhT1x04mPlSn1iekh0HMa+G7uY0faomzSzAilFvXOsfmLBnOBRg3SNYhV JsuXKEpkzKWst7nzA0NeK2m/9xl9wPmtDuwAt7BViRxNEsBruQRtEyZkDcujobGXeCzN/uxLQRxJ9n7NCDm23MreCcR4bkC6sEi0n6oDRKyN06ScVDCFArV7tr7lcA6d5zknakwM79oYn+ELAPKMQyOlOi8651UOC7RBp9KYxNpi+M77xGNiaAfjRMPX8kGjRRo3nD15d//LGChx3bRU9G762SdZ1TdWbXCv/8Jx/8/TttbujOjFEyE56LBaUBi4pdj+0EAyMy8rc4EGtlEO6V+JVl74xS1OCQq7vdsZFzlhfLFDMfG4lsacCefvCjkZWtv4jgHoydWfGNULXWjXbg==");
 		
 		String a = restTemplate.postForObject(url, data, String.class);
 		System.out.println(a);

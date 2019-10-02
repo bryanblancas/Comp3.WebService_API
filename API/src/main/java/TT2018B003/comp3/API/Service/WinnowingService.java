@@ -11,6 +11,8 @@ public class WinnowingService implements IWinnowing {
 
 	@Autowired
 	CryptoService cryptoService;
+	@Autowired
+	Base64u base64;
 	
 	private String chaffing;
 	private String pattern;
@@ -20,26 +22,27 @@ public class WinnowingService implements IWinnowing {
 		this.chaffing = chaffing;
 	}
 	
-	private static String patterntoString(boolean[] pattern) {
+	private static String booleantoString(boolean[] pattern) {
         String out = "";
         for (boolean x : pattern) {
             out += x == true ? '1' : '0';
         }
         return out;
     }
+	
+	private static String booleantoString(Boolean[] pattern) {
+        String out = "";
+        for (Boolean x : pattern) {
+            out += x.booleanValue() == true ? '1' : '0';
+        }
+        return out;
+    }
 
-    private static boolean[] patternF(String patt) {
+    private static boolean[] stringtoBoolean(String patt) {
         boolean[] out = new boolean[patt.length() * 8];
-        /*for (int i = 0; i < patt.length(); i++) {
-            String aux = Integer.toBinaryString(patt.charAt(i));
-            for (int j = 0; j < aux.length(); j++) {
-                out[(i*8) + j] = aux.charAt(j) == '1' ? true : false;
-            }
-        }*/
 
         	for(int i = 0; i < patt.length(); i++) {
         		int val = patt.charAt(i);
-        		String aux = Integer.toBinaryString(patt.charAt(i));
         		for(int j = 0 ; j < 8 ; j++) {
         			out[(i*8) + j] = (val & 128) == 0 ? false : true;
         			val <<= 1;
@@ -53,27 +56,30 @@ public class WinnowingService implements IWinnowing {
 	@Override
 	public String makeWinnowing() {
 		
-		Base64u base64 = new Base64u();
+		//Base64u base64 = new Base64u();
 		
 		String[] patternAndAesKey = pattern.split(" ");
 		String chaffingDecode = base64.decode(chaffing);
 		String aesKey = cryptoService.decryptAESKey(patternAndAesKey[1]);
 		String pattern = cryptoService.decryptPattern(patternAndAesKey[0], aesKey);
+		/*Winnowing*/
+		boolean[] patt = stringtoBoolean(pattern);
+		boolean[] chaffingByte = stringtoBoolean(chaffingDecode);
+		/*AQUIIII ESTÁ TODO EL TT*/
+		String cab = "";
+		String cert = "";
 		
-		String rtn = chaffingDecode + " : " + aesKey + " : " + pattern;
-		ystem.out.println(chaffing+" : "+pattern);
-		/*String rsap = pattern.split(" ")[1];
-		System.out.println("LALLAVEEEEEE "+rsap);
-		String aesk = cryptoservice.decryptAESKey(rsap);
-		return b64.decode(chaffing)+":"+pattern+" : "+aesk;*/
-		//boolean[] patt = patternF(b64.decode(pattern));
+		for(int i = 0 ; i<patt.length ;i++) {
+			if(patt[i]) {
+				cab+=chaffingByte[i] == true ? '1' : '0';
+			}else {
+				cert+=chaffingByte[i] == true ? '1' : '0';
+			}
+		}
 		
-
 		
-		//return patterntoString(patt) + " ----- " + patterntoString(patternF(b64.decode(chaffing));
-		//return b64.decode(pattern) + " ----- " + b64.decode(chaffing);
-		return  b64.decode(chaffing);
-		return rtn;
+		
+		return cert + " : " + aesKey + " : " + booleantoString(patt);
 	}
 
 	@Override
@@ -84,6 +90,11 @@ public class WinnowingService implements IWinnowing {
 	@Override
 	public String getPattern() {
 		return pattern;
+	}
+
+	@Override
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
 	}
 
 }
