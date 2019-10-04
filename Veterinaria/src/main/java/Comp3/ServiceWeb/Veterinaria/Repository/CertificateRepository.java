@@ -42,7 +42,9 @@ public class CertificateRepository implements ICertificateRepository {
 								certificate.getCertificate(),
 								certificate.getUser_data_idUser()
 								);
-		}catch(DuplicateKeyException e) {}
+		}catch(DuplicateKeyException e) {
+			System.out.println("DuplicateKeyEntry CertificateRepository.saveCertificate()");
+		}
 		catch(DataIntegrityViolationException e) {}
 		
 		return rows_affected;
