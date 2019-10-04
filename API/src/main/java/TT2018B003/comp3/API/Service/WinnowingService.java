@@ -1,5 +1,11 @@
 package TT2018B003.comp3.API.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+
+import javax.security.cert.CertificateException;
+import javax.security.cert.X509Certificate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -52,6 +58,46 @@ public class WinnowingService implements IWinnowing {
         
         return out;
     }
+    
+    private static byte[] arraybytetoBite(String array) {
+    	byte[] bites = new byte[array.length()/8];
+    	
+    	String[] bytes = array.split("(?<=\\G.{8})");
+    	
+    	for(int i = 0 ; i < bytes.length ; i++) {
+    		bites[i] = Byte.parseByte(bytes[i],2);
+    		
+    	}
+    	return bites;
+    }
+    
+    private static String arraybytetoString(byte[] array) {
+    	String out = "";
+    	for(byte i : array) {
+    		out+= (char) i;
+    	}
+    	return out;
+    }
+    
+    private static String getCert(String cert) {
+    	return "-----BEGIN CERTIFICATE-----\r\n"+cert+"\r\n" + 
+    			"-----END CERTIFICATE-----\r\n" ;
+    }
+    
+   private static String[] getDataCert(byte[] cert) {
+	   String[] data = null;
+	   try {
+			X509Certificate certF = X509Certificate.getInstance(getCert(arraybytetoString(cert)).getBytes());
+			System.out.println(certF.getSubjectDN().getName());
+			data = certF.getSubjectDN().getName().split(",");
+			
+		} catch (CertificateException e) {
+			System.out.println("Error al obtener certificado");
+			e.printStackTrace();
+		}
+	   
+	   return data;
+   }
 
 	@Override
 	public String makeWinnowing() {
@@ -77,9 +123,19 @@ public class WinnowingService implements IWinnowing {
 			}
 		}
 		
+		byte[] certificado = arraybytetoBite(cert);
+		
+		String[] dataCert = getDataCert(certificado);
 		
 		
-		return cert + " : " + aesKey + " : " + booleantoString(patt);
+		if(dataCert != null) {
+			String email = dataCert[0].split("=")[1];
+			
+			return "Certificado Válido ---- "+email+" ---- "+arraybytetoString(certificado);
+		}else {
+			return "Certificado no Válido";
+		}
+		
 	}
 
 	@Override
