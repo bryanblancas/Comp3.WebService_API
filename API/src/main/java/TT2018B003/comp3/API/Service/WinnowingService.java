@@ -2,11 +2,11 @@ package TT2018B003.comp3.API.Service;
 
 import javax.security.cert.CertificateException;
 import javax.security.cert.X509Certificate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import TT2018B003.comp3.API.Model.CertificateModel;
+import TT2018B003.comp3.API.Model.DataModel;
 import TT2018B003.comp3.API.Utils.Base64u;
 
 @Service
@@ -20,6 +20,7 @@ public class WinnowingService implements IWinnowing {
 	private String chaffing;
 	private String pattern;
 	
+	private static String dirServA = "http://25.7.11.142:3001";
 	@Override
 	public void setChaffing(String chaffing) {
 		this.chaffing = chaffing;
@@ -95,6 +96,11 @@ public class WinnowingService implements IWinnowing {
 	   
 	   return data;
    }
+   private static String validateCert(String shaUser) {
+	   	RestTemplate restTemplate = new RestTemplate();		
+		DataModel data = new DataModel(shaUser);		
+	   return restTemplate.postForObject(dirServA+"/api/verificarCertificado", data, String.class);
+   }
 
 	@Override
 	public String makeWinnowing() {
@@ -121,6 +127,7 @@ public class WinnowingService implements IWinnowing {
 			}
 		}
 		
+		System.out.println("Cabecera: "+arraybytetoString(arraybytetoBite(cab)));
 		
 		byte[] certificado = arraybytetoBite(cert);
 		String certificate = arraybytetoString(certificado).replace("\r", "").replace("\n", "");
@@ -134,12 +141,23 @@ public class WinnowingService implements IWinnowing {
 			 * 
 			 * Llamada a AC para validar status de Certificado
 			 * 
-			 */System.out.println("SHA_CERT:");
-			cryptoService.doSHA(certificate);
+			 */
+			System.out.println("SHA_CERT:");			
+			String shaCert = cryptoService.doSHA(certificate);
 			
-			System.out.println(certificate+" 1");
-			return certificate+" 1";
+			String response = validateCert(shaEmail);
 			
+			System.out.println(certificate+" 1 FF "+response);
+			if(response.equals("0")) {
+				System.out.println("No existe el usuario");
+				return "0 0";
+			} else if(response.equals(shaCert)) {
+				return certificate+" 1";
+			} else {
+				System.out.println("El usuario cambió de certificado");
+				return"0 2";
+			}
+
 		}
 		}catch(Exception e ) {
 			System.out.println(e.getMessage());
