@@ -121,8 +121,6 @@ public class WinnowingService implements IWinnowing {
 		
 		byte[] certificado = arraybytetoBite(cert);
 		String certificate = arraybytetoString(certificado).replace("\r", "").replace("\n", "");
-
-		String rtn = "null";
 		
 		String[] dataCert = getDataCert(certificado);		
 		if(dataCert != null) {
@@ -136,12 +134,11 @@ public class WinnowingService implements IWinnowing {
 			 */
 			
 			
-			int status = 1;
-			rtn = certificate+" "+status;
+			return certificate+" 1";
 			
 		}
 		
-		return rtn;
+		return " 0";
 		
 	}
 
