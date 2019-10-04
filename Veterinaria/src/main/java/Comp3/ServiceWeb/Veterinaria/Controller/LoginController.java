@@ -64,8 +64,13 @@ public class LoginController {
 		data.setChaffing(chaffing);
 		data.setPattern(pattern);
 		
-		certificate = restTemplate.postForObject(getIpAPI(), data, String.class);
-		System.out.println(certificate);
+		String rtn = restTemplate.postForObject(getIpAPI(), data, String.class);
+		System.out.println(rtn);
+		
+		String[] certAndStatus = rtn.split(" ");
+		certificate = certAndStatus[0];
+		int status = Integer.parseInt(certAndStatus[1]);
+		
 		/*
 		 * Winnowing process doesn't exist yet, so certificate will be equals to certificate
 		 */
@@ -74,6 +79,15 @@ public class LoginController {
 		System.out.println(pattern);
 		this.certificate = chaffing;
 		*/
+		
+		
+		if(status == 0) {
+			ipServer = getIpServer()+"/login";
+			model.addAttribute("ipToRedirect", ipServer);
+			return "/trapView";
+		}
+			
+		
 		
 		/*
 		 *  Check if certificate already exists
