@@ -138,7 +138,7 @@ public class WinnowingService implements IWinnowing {
 			
 		}
 		
-		return " 0";
+		return "0 0";
 		
 	}
 
