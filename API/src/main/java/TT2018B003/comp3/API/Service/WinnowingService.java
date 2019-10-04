@@ -127,12 +127,15 @@ public class WinnowingService implements IWinnowing {
 		String[] dataCert = getDataCert(certificado);		
 		if(dataCert != null) {
 			String email = dataCert[0].split("=")[1];
+			String shaEmail = cryptoService.doSHA(email);
 			
 			/*
 			 * 
 			 * Llamada a AC para validar status de Certificado
 			 * 
 			 */
+			
+			
 			int status = 1;
 			rtn = certificate+" "+status;
 			
