@@ -83,6 +83,7 @@ public class LoginController {
 		
 		
 		if(status == 0) {
+			this.certificate = null;
 			System.out.println("Certificado no válido");
 			ipServer = getIpServer()+"/showForm2";
 			model.addAttribute("ipToRedirect", ipServer);
