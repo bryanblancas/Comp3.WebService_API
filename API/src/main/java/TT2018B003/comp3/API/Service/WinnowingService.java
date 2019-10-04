@@ -1,15 +1,12 @@
 package TT2018B003.comp3.API.Service;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-
 import javax.security.cert.CertificateException;
 import javax.security.cert.X509Certificate;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import TT2018B003.comp3.API.Model.CertificateModel;
 import TT2018B003.comp3.API.Utils.Base64u;
 
 @Service
@@ -102,12 +99,11 @@ public class WinnowingService implements IWinnowing {
 	@Override
 	public String makeWinnowing() {
 		
-		//Base64u base64 = new Base64u();
-		
 		String[] patternAndAesKey = pattern.split(" ");
 		String chaffingDecode = base64.decode(chaffing);
 		String aesKey = cryptoService.decryptAESKey(patternAndAesKey[1]);
 		String pattern = cryptoService.decryptPattern(patternAndAesKey[0], aesKey);
+		
 		/*Winnowing*/
 		boolean[] patt = stringtoBoolean(pattern);
 		boolean[] chaffingByte = stringtoBoolean(chaffingDecode);
@@ -124,17 +120,25 @@ public class WinnowingService implements IWinnowing {
 		}
 		
 		byte[] certificado = arraybytetoBite(cert);
+		String certificate = arraybytetoString(certificado).replace("\r", "").replace("\n", "");
+
+		String rtn = "null";
 		
-		String[] dataCert = getDataCert(certificado);
-		
-		
+		String[] dataCert = getDataCert(certificado);		
 		if(dataCert != null) {
 			String email = dataCert[0].split("=")[1];
 			
-			return "Certificado Válido ---- "+email+" ---- "+arraybytetoString(certificado);
-		}else {
-			return "Certificado no Válido";
+			/*
+			 * 
+			 * Llamada a AC para validar status de Certificado
+			 * 
+			 */
+			int status = 1;
+			rtn = certificate+" "+status;
+			
 		}
+		
+		return rtn;
 		
 	}
 
