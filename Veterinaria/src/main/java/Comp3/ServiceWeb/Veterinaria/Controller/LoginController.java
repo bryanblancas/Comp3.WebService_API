@@ -65,6 +65,7 @@ public class LoginController {
 		data.setPattern(pattern);
 		
 		String rtn = restTemplate.postForObject(getIpAPI(), data, String.class);
+		
 		System.out.println(rtn);
 		
 		String[] certAndStatus = rtn.split(" ");
@@ -82,7 +83,8 @@ public class LoginController {
 		
 		
 		if(status == 0) {
-			ipServer = getIpServer()+"/login";
+			System.out.println("Certificado no válido");
+			ipServer = getIpServer()+"/showForm2";
 			model.addAttribute("ipToRedirect", ipServer);
 			return "/trapView";
 		}
@@ -117,6 +119,12 @@ public class LoginController {
 	@RequestMapping("/showForm")
 	public String showForm(ModelMap model) {
 		model.addAttribute("infoMessage", "Inicia sesión para guardar tu certificado");
+		return "/login";
+	}
+	
+	@RequestMapping("/showForm2")
+	public String showForm2(ModelMap model) {
+		model.addAttribute("errorMessage", "Certificado no válido, si quieres acceder al servicio inicia sesión");
 		return "/login";
 	}
 	
