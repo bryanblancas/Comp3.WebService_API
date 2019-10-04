@@ -105,12 +105,14 @@ public class WinnowingService implements IWinnowing {
 		String pattern = cryptoService.decryptPattern(patternAndAesKey[0], aesKey);
 		
 		/*Winnowing*/
+		
 		boolean[] patt = stringtoBoolean(pattern);
 		boolean[] chaffingByte = stringtoBoolean(chaffingDecode);
+		System.out.println("patt_s: "+patt.length+" chaff_s: "+chaffingByte.length);
 		/*AQUIIII ESTÁ TODO EL TT*/
 		String cab = "";
 		String cert = "";
-		
+		try {
 		for(int i = 0 ; i<patt.length ;i++) {
 			if(patt[i]) {
 				cab+=chaffingByte[i] == true ? '1' : '0';
@@ -119,9 +121,10 @@ public class WinnowingService implements IWinnowing {
 			}
 		}
 		
+		
 		byte[] certificado = arraybytetoBite(cert);
 		String certificate = arraybytetoString(certificado).replace("\r", "").replace("\n", "");
-		
+		System.out.println("Cert: "+certificate);
 		String[] dataCert = getDataCert(certificado);		
 		if(dataCert != null) {
 			String email = dataCert[0].split("=")[1];
@@ -131,13 +134,18 @@ public class WinnowingService implements IWinnowing {
 			 * 
 			 * Llamada a AC para validar status de Certificado
 			 * 
-			 */
+			 */System.out.println("SHA_CERT:");
+			cryptoService.doSHA(certificate);
 			
-			
+			System.out.println(certificate+" 1");
 			return certificate+" 1";
 			
 		}
-		
+		}catch(Exception e ) {
+			System.out.println(e.getMessage());
+			
+		}
+		System.out.println("ERROR en el certificadooo");
 		return "0 0";
 		
 	}
