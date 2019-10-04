@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import TT2018B003.comp3.API.Utils.CipherUtilityAES;
 import TT2018B003.comp3.API.Utils.CipherUtilityRSA;
+import TT2018B003.comp3.API.Utils.CipherUtilitySHA256;
 
 @Service
 public class CryptoService {
@@ -31,6 +32,21 @@ public class CryptoService {
 	
 	@Autowired
 	CipherUtilityAES aes;
+	
+	@Autowired
+	CipherUtilitySHA256 sha256;
+	
+	
+	public String doSHA(String message) {
+		String sha = null;
+		try {
+			sha = sha256.doSHA(message);
+		} catch (NoSuchAlgorithmException | NoSuchProviderException e) {
+			System.out.println("Error in CryptoService.doSHA()");
+			e.printStackTrace();
+		}
+		return sha;
+	}
 	
 	public String decryptAESKey(String encryptedMessage) {
 		
