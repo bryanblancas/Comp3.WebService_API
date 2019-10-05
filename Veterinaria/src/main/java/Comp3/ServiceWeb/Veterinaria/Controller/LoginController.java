@@ -32,6 +32,7 @@ public class LoginController {
 	
 	// Variables to save chaffing
 	private String certificate = null;
+	private int status = -1;
 	
 	/*
 	 * THIS IS THE PATH WHICH THE EXTENSION WILL SCAN
@@ -65,12 +66,12 @@ public class LoginController {
 		data.setPattern(pattern);
 		
 		String rtn = restTemplate.postForObject(getIpAPI(), data, String.class);
+		String[] certAndStatus = rtn.split(" ");
 		
 		System.out.println(rtn);
 		
-		String[] certAndStatus = rtn.split(" ");
 		certificate = certAndStatus[0];
-		int status = Integer.parseInt(certAndStatus[1]);
+		status = Integer.parseInt(certAndStatus[1]);
 		
 		/*
 		 * Winnowing process doesn't exist yet, so certificate will be equals to certificate
@@ -83,19 +84,39 @@ public class LoginController {
 		
 		
 		if(status == 0) {
-			this.certificate = null;
+			certificate = null;
+			status = -1;
 			System.out.println("Certificado no válido");
-			ipServer = getIpServer()+"/showForm2";
+			ipServer = getIpServer()+"/showForm0";
 			model.addAttribute("ipToRedirect", ipServer);
 			return "/trapView";
 		}
-			
-		
 		
 		/*
 		 *  Check if certificate already exists
 		 */
 		CertificateEntity ce = loginService.checkCertificateExistance(certificate);
+		
+		if(status == 2) {
+			/*
+			 * Delete this cert, which is revocated, from DB only if it already exists  
+			 */
+			
+			if(ce != null) {
+				int rows_affected = loginService.deleteCertificateByCert(ce.getCertificate());
+				if(rows_affected == 1)
+					System.out.println("Exito al borrar certificado LoginController.login()");
+				else
+					System.out.println("Error al borrar certificado LoginController.login()");
+			}
+			
+			certificate = null;
+			status = -1;
+			System.out.println("Certificado revocado");
+			ipServer = getIpServer()+"/showForm2";
+			model.addAttribute("ipToRedirect", ipServer);
+			return "/trapView";
+		}
 		
 		/*
 		 * If certificate exists, sessionvariable user_data_session is setting
@@ -119,13 +140,19 @@ public class LoginController {
 	
 	@RequestMapping("/showForm")
 	public String showForm(ModelMap model) {
-		model.addAttribute("infoMessage", "Inicia sesión para guardar tu certificado");
+		model.addAttribute("infoMessage", "Inicia sesión para vincular el certificado");
+		return "/login";
+	}
+	
+	@RequestMapping("/showForm0")
+	public String showForm0(ModelMap model) {
+		model.addAttribute("errorMessage", "Certificado no válido, si quieres acceder al servicio inicia sesión");
 		return "/login";
 	}
 	
 	@RequestMapping("/showForm2")
 	public String showForm2(ModelMap model) {
-		model.addAttribute("errorMessage", "Certificado no válido, si quieres acceder al servicio inicia sesión");
+		model.addAttribute("errorMessage", "Certificado revocado, si quieres acceder al servicio inicia sesión");
 		return "/login";
 	}
 	
