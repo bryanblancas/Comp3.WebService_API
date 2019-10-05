@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import Comp3.ServiceWeb.Veterinaria.Model.Entity.User_dataEntity;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.VetEntity;
 import Comp3.ServiceWeb.Veterinaria.Repository.Interfaces.IVetRepository;
 import lombok.extern.slf4j.Slf4j;

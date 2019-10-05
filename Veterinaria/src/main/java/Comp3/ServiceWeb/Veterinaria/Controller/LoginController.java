@@ -73,6 +73,8 @@ public class LoginController {
 		certificate = certAndStatus[0];
 		status = Integer.parseInt(certAndStatus[1]);
 		
+		System.out.println("Status certificado: "+status);
+		
 		/*
 		 * Winnowing process doesn't exist yet, so certificate will be equals to certificate
 		 */
@@ -108,7 +110,8 @@ public class LoginController {
 					System.out.println("Exito al borrar certificado LoginController.login()");
 				else
 					System.out.println("Error al borrar certificado LoginController.login()");
-			}
+			}else
+				System.out.println("No existía previamente");
 			
 			certificate = null;
 			status = -1;

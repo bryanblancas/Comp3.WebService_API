@@ -103,8 +103,9 @@ public class LoginService {
 		
 		CertificateEntity existcert = certRepo.findCertificateByIdUser(ce.getUser_data_idUser());
 		
-		if(existcert != null)
-			return -1;
+		if(existcert != null){
+			certRepo.deleteCertificateByCert(existcert.getCertificate());
+		}
 		
 		int rows_affected = certRepo.saveCertificate(ce);
 		return rows_affected;
