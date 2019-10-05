@@ -63,4 +63,16 @@ public class CertificateRepository implements ICertificateRepository {
 		return ce;
 	}
 
+	@Override
+	public int deleteCertificateByCert(String certificate) {
+		String query = "DELETE FROM certificate WHERE certificate='"+certificate+"';";
+		int rows_affected;
+		try {
+			rows_affected = jdbcTemplate.update(query);
+		}catch(DataIntegrityViolationException e) {
+			return 0;
+		}
+		return rows_affected;
+	}
+
 }

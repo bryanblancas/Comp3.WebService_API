@@ -1,5 +1,7 @@
 package Comp3.ServiceWeb.Veterinaria;
 
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.CertificateEntity;
 import Comp3.ServiceWeb.Veterinaria.Repository.Interfaces.ICertificateRepository;
-import org.junit.Assert;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,6 +21,7 @@ public class TestCertificateRepository {
 	ICertificateRepository certRepo;
 	
 	@Test
+	@Ignore
 	public void findCertificateByIdTest() {
 		String certificate = "certificate_bryanclient";
 		CertificateEntity ce = certRepo.findCertificateById(certificate);
@@ -28,9 +30,17 @@ public class TestCertificateRepository {
 	}
 	
 	@Test
+	@Ignore
 	public void saveCertificateTest() {
 		CertificateEntity ce = new CertificateEntity("certificate_bryanvet", "as");
 		int rows_affected = certRepo.saveCertificate(ce);
+		Assert.assertEquals(1, rows_affected);
+	}
+	
+	@Test
+	public void deleteCertificateByCert() {
+		CertificateEntity ce = new CertificateEntity("MIIFnDCCBISgAwIBAgIUEpexe331o4hlTIhkyZ7pbX02rqcwDQYJKoZIhvcNAQELBQAwggELMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQQ2l1ZGFkIGRlIE1leGljbzEZMBcGA1UEBwwQR3VzdGF2byBBLk1hZGVybzEOMAwGA1UEEQwFMDc2MDAxLDAqBgNVBAkMI0NhbGxlIDQgTm8uMTIgQ29sLlByb2dyZXNvIE5hY2lvbmFsMRMwEQYDVQQKDApJbmRlZmluaWRvMRMwEQYDVQQLDApJbmRlZmluaWRvMRcwFQYDVQQDDA5pbmRlZmluaWRvLmNvbTEbMBkGA1UEAwwSd3d3LmluZGVmaW5pZG8uY29tMSgwJgYJKoZIhvcNAQkBFhlkaWVnb2FydHVybzIxMjFAZ21haWwuY29tMB4XDTE5MTAwMzA0MDQ0OFoXDTIwMTAwMjA0MDQ0OFowggELMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQQ2l1ZGFkIGRlIE1leGljbzEZMBcGA1UEBwwQR3VzdGF2byBBLk1hZGVybzEOMAwGA1UEEQwFMDc2MDAxLDAqBgNVBAkMI0NhbGxlIDQgTm8uMTIgQ29sLlByb2dyZXNvIE5hY2lvbmFsMRMwEQYDVQQKDApJbmRlZmluaWRvMRMwEQYDVQQLDApJbmRlZmluaWRvMRcwFQYDVQQDDA5pbmRlZmluaWRvLmNvbTEbMBkGA1UEAwwSd3d3LmluZGVmaW5pZG8uY29tMSgwJgYJKoZIhvcNAQkBFhlkaWVnb2FydHVybzIxMjFAZ21haWwuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqAXrx5M+c1LP62aXEIJrq9WSlrRb0hb6iE9kHoGQMEyX9kdDAQsvjcHW1JkNMBb15aFukwpgJpgFIBtSknlspOi3gg0HWub9DxI2BMCFRJL214MJEoU99mul7CGGGN8l7WpDAL3hKSkTQo7GmtMKs0RxUtJUAicrF4CuBEm8x16V9uCxB+12c4wKIULeanfdWBc4Vty0DzBle+uzeyCofjJ+/jq/kwtI33NSIvsxNKMa1YrdYs/ThwbL9IrmuLgMKc/VJ5r8LPOTrad1jKl+prIGbd7CBRWmkPrUiJVa5PmEMWvTOKraAz2bakMbfm5Hz/ESKWwVq+10YNEJxK+WhQIDAQABo4HzMIHwMB0GA1UdDgQWBBS3cixDjZSxB0ZYx0EAAX4U5ymgTDAfBgNVHSMEGDAWgBS3cixDjZSxB0ZYx0EAAX4U5ymgTDARBggrBgEFBQcBGAQFMAMCAQUwEgYDVR0TAQH/BAgwBgEB/wIBATAOBgNVHQ8BAf8EBAMCBaAwSAYDVR0lAQH/BD4wPAYIKwYBBQUHAwEGCCsGAQUFBwMCBggrBgEFBQcDEQYIKwYBBQUHAwcGCCsGAQUFBwMGBggrBgEFBQcDBTAtBgNVHREEJjAkgg5pbmRlZmluaWRvLmNvbYISd3d3LmluZGVmaW5pZG8uY29tMA0GCSqGSIb3DQEBCwUAA4IBAQB+K5I63vEOhRsZS1s1pvjdlttvzomzz4rh0FY+iPE6DGTSoPmHXPqta2YpszXoagGFQ0+gOD3fOuiKm4sEfvFxkRfSSFoWrtW0ujUguLTpa0z/D1p4WoNNeGkRruxFiSHERHW6TbauH8csWTGsQoKG6pzdfYZWxcTyu5jHxW1IDDFE1LCDprhHLEY6S0hwMN3hFF0meRKa0NFxFgx8T2THVOGNyWwJS83fpndhvpcuUg6AVTI22fxERW6EqCO5mZh2iFcartBhGoi8grovzNbm+4/ikCL2AGXaDnrw8w8xqT8DeAEIyEBQcfRp3j3UIuKwE28QH18DmgdXgjLGv6qm", "popo");
+		int rows_affected = certRepo.deleteCertificateByCert(ce.getCertificate());
 		Assert.assertEquals(1, rows_affected);
 	}
 	

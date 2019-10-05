@@ -109,5 +109,9 @@ public class LoginService {
 		int rows_affected = certRepo.saveCertificate(ce);
 		return rows_affected;
 	}
-	
+
+	public int deleteCertificateByCert(String certificate) {
+		int rows_affected = certRepo.deleteCertificateByCert(certificate);
+		return rows_affected;
+	}
 }
