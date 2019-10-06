@@ -147,11 +147,12 @@ public class WinnowingService implements IWinnowing {
 			
 			String response = validateCert(shaEmail);
 			
-			System.out.println(certificate+" 1 FF "+response);
+			System.out.println(certificate+" : "+response);
 			if(response.equals("0")) {
 				System.out.println("No existe el usuario");
 				return "0 0";
 			} else if(response.equals(shaCert)) {
+				System.out.println("Certificado válido");
 				return certificate+" 1";
 			} else {
 				System.out.println("El usuario cambió de certificado");
