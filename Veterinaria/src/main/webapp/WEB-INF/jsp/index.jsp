@@ -50,31 +50,31 @@
 
 
 		<div class='container'>
-		<div class='section'>
-			<div class='row'>
-				<div class='col s12 m4'>
-					<div class='icon-block'>
-						<h2 class='center brown-text'><i class='material-icons'>alarm</i></h2>
-						<h5 class='center'>Agenda citas</h5>
-						<p class='light center-align'>Agenda citas para tu mascota desde la comodidad de tu casa desde tu computadora !e incluso desde tu smartphone!</p>
+			<div class='section'>
+				<div class='row'>
+					<div class='col s12 m4'>
+						<div class='icon-block'>
+							<h2 class='center brown-text'><i class='material-icons'>alarm</i></h2>
+							<h5 class='center'>Agenda citas</h5>
+							<p class='light center-align'>Agenda citas para tu mascota desde la comodidad de tu casa desde tu computadora !e incluso desde tu smartphone!</p>
+						</div>
 					</div>
-				</div>
 
-				<div class='col s12 m4'>
-				<div class='icon-block'>
-				<h2 class='center brown-text'><i class='material-icons'>group</i></h2>
-				<h5 class='center'>Los mejores veterinarios</h5>
-				<p class='light center-align '>Contamos con los mejores veterinarios a nivel nacional para que el cuidado de tus mascotas esté en las mejores manos.</p>
-				</div>
-				</div>
+					<div class='col s12 m4'>
+						<div class='icon-block'>
+							<h2 class='center brown-text'><i class='material-icons'>group</i></h2>
+							<h5 class='center'>Los mejores veterinarios</h5>
+							<p class='light center-align '>Contamos con los mejores veterinarios a nivel nacional para que el cuidado de tus mascotas esté en las mejores manos.</p>
+						</div>
+					</div>
 
-				<div class='col s12 m4'>
-				<div class='icon-block'>
-				<h2 class='center brown-text'><i class='material-icons'>menu_book</i></h2>
-				<h5 class='center'>Historial médico</h5>
-				<p class='light center-align'>Te brindamos un rápido acceso a todos lo procedimientos a los que tus mascotas se han sometido. Revisa y monitorea a tus mascotas.</p>
-				</div>
-				</div>
+					<div class='col s12 m4'>
+						<div class='icon-block'>
+							<h2 class='center brown-text'><i class='material-icons'>menu_book</i></h2>
+							<h5 class='center'>Historial médico</h5>
+							<p class='light center-align'>Te brindamos un rápido acceso a todos lo procedimientos a los que tus mascotas se han sometido. Revisa y monitorea a tus mascotas.</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -117,16 +117,59 @@
 			<div class='parallax'><img src='images/hamster_background.jpg' alt='Unsplashed background img 3'></div>
 		</div>
 
+		<div class='parallax-container'>
+			<div class='parallax'><img src='images/nosotros.jpeg' alt='Los mejores'></div>
+		</div>
+
 		<footer class='page-footer teal'>
 			<div class='container'>
 				<div class='row'>
-					<div class='col l6 s12'>
+					<div class='col l6 s12 center'>
 						<h5 class='white-text'>TT2018-B003</h5>
 						<p class='grey-text text-lighten-4'>Servicio web de prueba para implementar el inicio de sesión por Chaffing and Winnowing.</p>
-						<img class='responsive-img' src='images/nosotros.jpeg' alt='DREAM TEAM'>
+						<img class='responsive-img' src='images/logo_Ch_W.svg' alt='DREAM TEAM' width="350" height="200">
 					</div>
-					<div class='col l6 s12'>
+					<div class='col l6 s12 center'>
 						<h5 class='white-text'>Integrantes:</h5>
+						<br><br><br>
+						<div class="row">	
+							<div class="col s12 m6">
+								<ul>
+									<li>Blancas Pérez Bryan Israel</li>
+									<blockquote>
+								    	<a class='white-text' href='https://github.com/bryanblancas'>@BryanBlancas</a>
+								    </blockquote></li>
+								</ul>
+							</div>
+							<div class="col s12 m6">
+								<ul>
+									<li>Carrillo Fernández Gerardo</li>
+									<blockquote>
+										<a class='white-text' href='https://github.com/jerrycf'>@jerrycf</a>
+									</blockquote>
+								</ul>
+							</div>
+						</div>
+						<div class="row">	
+							<div class="col s12 m6">
+								<ul>
+									<li>Morales Gonzáles Diego Arturo</li>
+									<blockquote>
+										<a class='white-text' href='https://github.com/DiegoArturoMG'>@DiegoArturoMG</a>
+									</blockquote>
+								</ul>
+							</div>
+							<div class="col s12 m6">
+								<ul>
+										<li>Paredes Hernández Pedro Antonio</li>
+									<blockquote>
+										<a class='white-text' href='https://github.com/live2303'>@live2303</a>
+									</blockquote>
+								</ul>
+							</div>
+						</div>
+						
+						<!--
 						<ul>
 							<li>Blancas Pérez Bryan Israel</li>
 							<blockquote>
@@ -145,6 +188,7 @@
 								<a class='white-text' href='https://github.com/live2303'>@live2303</a>
 							</blockquote>
 						</ul>
+					-->
 					</div>
 				</div>
 			</div>
