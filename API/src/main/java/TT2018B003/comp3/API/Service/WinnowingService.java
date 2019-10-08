@@ -20,7 +20,7 @@ public class WinnowingService implements IWinnowing {
 	private String chaffing;
 	private String pattern;
 	
-	private static String dirServA = "http://25.7.11.142:3001";
+	private static String dirServA = "http://10.100.68.109:3001";
 	@Override
 	public void setChaffing(String chaffing) {
 		this.chaffing = chaffing;
