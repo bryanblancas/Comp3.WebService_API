@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import TT2018B003.comp3.API.Utils.CipherUtilityAES;
 import TT2018B003.comp3.API.Utils.CipherUtilityRSA;
 import TT2018B003.comp3.API.Utils.CipherUtilitySHA256;
+import TT2018B003.comp3.API.Utils.SignatureUtility;
 
 @Service
 public class CryptoService {
@@ -35,6 +36,9 @@ public class CryptoService {
 	
 	@Autowired
 	CipherUtilitySHA256 sha256;
+	
+	@Autowired
+	SignatureUtility signature;
 	
 	
 	public String doSHA(String message) {
@@ -113,6 +117,10 @@ public class CryptoService {
 		
 		return pvt;
 		
+	}
+	
+	public int verifyCertificate(String certificate){
+		return signature.verifyCertificate(certificate);
 	}
 	
 	
