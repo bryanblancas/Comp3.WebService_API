@@ -132,19 +132,14 @@ public class WinnowingService implements IWinnowing {
 		byte[] certificado = arraybytetoBite(cert);
 		String certificate = arraybytetoString(certificado).replace("\r", "").replace("\n", "");
 		System.out.println("Cert: "+certificate);
-		String[] dataCert = getDataCert(certificado);		
-		if(dataCert != null) {
+		String[] dataCert = getDataCert(certificado);	
+		//Se verifica si el certificado fue emitido por la AC
+		if(dataCert != null && cryptoService.verifyCertificate(getCert(certificate))==1 ) {
 			String email = dataCert[0].split("=")[1];
 			String shaEmail = cryptoService.doSHA(email);
-			
-			/*
-			 * 
-			 * Llamada a AC para validar status de Certificado
-			 * 
-			 */
+		
 			System.out.println("SHA_CERT:");			
-			String shaCert = cryptoService.doSHA(certificate);
-			
+			String shaCert = cryptoService.doSHA(certificate);			
 			String response = validateCert(shaEmail);
 			
 			System.out.println(certificate+" : "+response);
