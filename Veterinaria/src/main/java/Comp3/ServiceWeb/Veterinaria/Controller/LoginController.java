@@ -88,7 +88,7 @@ public class LoginController {
 		if(status == 0) {
 			certificate = null;
 			status = -1;
-			System.out.println("Certificado no válido");
+			System.out.println("Credenciales Inválidas");
 			ipServer = getIpServer()+"/showForm0";
 			model.addAttribute("ipToRedirect", ipServer);
 			return "/trapView";
@@ -143,19 +143,19 @@ public class LoginController {
 	
 	@RequestMapping("/showForm")
 	public String showForm(ModelMap model) {
-		model.addAttribute("infoMessage", "Inicia sesión para vincular el certificado");
+		model.addAttribute("infoMessage", "Inicia sesión para vincular las credenciales");
 		return "/login";
 	}
 	
 	@RequestMapping("/showForm0")
 	public String showForm0(ModelMap model) {
-		model.addAttribute("errorMessage", "Certificado no válido, si quieres acceder al servicio inicia sesión");
+		model.addAttribute("errorMessage", "Credenciales Inválidas");
 		return "/login";
 	}
 	
 	@RequestMapping("/showForm2")
 	public String showForm2(ModelMap model) {
-		model.addAttribute("errorMessage", "Certificado revocado, si quieres acceder al servicio inicia sesión");
+		model.addAttribute("errorMessage", "Credenciales Inválidas");
 		return "/login";
 	}
 	
