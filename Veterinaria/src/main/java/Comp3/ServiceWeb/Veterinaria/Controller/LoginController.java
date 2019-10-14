@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 
@@ -219,19 +220,22 @@ public class LoginController {
 		 */
 		
 		model.addAttribute("user_data_session", userdatasession);		
-		if(userdatasession.getType() == 1)
-			return "/welcome";
-		return "/welcome";
+		//if(userdatasession.getType() == 1)
+		//	return "redirect:/welcome";
+		return "redirect:/welcome";
 	}
 	
 	
 	@RequestMapping(value = "/welcome")
-	public String showWelcomePage(@ModelAttribute("user_data_session") UserDataSession userdatasession) {
+	public String showWelcomePage(@ModelAttribute(name = "user_data_session") UserDataSession userdatasession) {
 		
 		if(userdatasession.getType() == 0)
 			return "redirect:/index";
-			
-		return "/welcome";
+		
+		if(userdatasession.getType() == 1)
+			return "/client/clientIndex";
+		
+		return "/vet";
 	
 	}
 	
@@ -255,7 +259,7 @@ public class LoginController {
 			prop.load(file);
 			ipServer = prop.getProperty("myserver.ip");
 		}catch(IOException e) {
-			System.out.println("Error in LoginCOntroller.getIpServer()");
+			System.out.println("Error in LoginController.getIpServer()");
 			e.printStackTrace();
 		}
 		return ipServer;
