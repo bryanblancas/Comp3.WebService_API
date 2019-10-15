@@ -12,6 +12,9 @@
 		<link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
 		<link href='../css/materialize.css' type='text/css' rel='stylesheet' media='screen,projection'/>
 		<link href='../css/style.css' type='text/css' rel='stylesheet' media='screen,projection'/>
+		<!--<style>
+			.modal { width: 75% !important ; height: 75% !important ; 
+		</style>-->
 	</head>
 	<body class='grey lighten-2'>
 
@@ -101,6 +104,7 @@
 								<label for='name'>Nombre</label>
 							</div>	
 						</div>
+
 					</div>
 
 					<div class="row">
@@ -204,6 +208,7 @@
 	  	</div>
 		
 
+		
 		<div id="infoAppointment_modal" class="modal">
 		    <div class="modal-content" id="infoAppointment_div">
 		    	
@@ -212,6 +217,57 @@
 		      	<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
 		    </div>
 	  	</div>
+
+
+
+		<div id="bookAppointment_modal" class="modal">
+		    <div class="modal-content">
+
+		    	<form action="/client/bookAppointment" method="POST">
+
+		    		<div class="row">
+						<div class="col s12">
+							<h5 class='brand-logo center' id='infoBookAppoinment_h5'><p >Agenda tu cita</p></h5>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col s8">
+							<div class="input-field col s12 appendVets_div">
+								${vetsSelect}
+								<label for='idVet_form'>Elige veterinario</label>
+							</div>
+						</div>
+							
+						<div class="col s4">
+							<div class="input-field col s12">
+								 <input type="text" name="date" class="datepicker" required placeholder="Elige la fecha de la cita">
+							</div>	
+						</div>
+
+						<div class="col s4 hide">
+							<div class="input-field col s12">
+								 <input type="text" name="idPet" id="idPet" value="">
+							</div>	
+						</div>
+					</div>
+					
+					<div class="col s6 offset-s3 m4 offset-m4">
+						<div class='input-field col s12 center'>
+							<button class="btn waves-effect waves-light" type="submit" id="bookAppointment_button">Agendar cita
+						    	<i class="material-icons right">send</i>
+						  	</button>
+						</div>
+					</div>	
+
+		    	</form>
+		    	
+		    </div>
+		    <div class="modal-footer">
+		      	<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+		    </div>
+	  	</div>
+
 
 
 		<script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
