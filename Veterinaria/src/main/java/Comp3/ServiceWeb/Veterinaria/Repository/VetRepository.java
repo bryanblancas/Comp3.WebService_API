@@ -1,11 +1,14 @@
 package Comp3.ServiceWeb.Veterinaria.Repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import Comp3.ServiceWeb.Veterinaria.Model.Entity.PetEntity;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.VetEntity;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.Mapper.VetEntityMapper;
 import Comp3.ServiceWeb.Veterinaria.Repository.Interfaces.IVetRepository;
@@ -72,6 +75,15 @@ public class VetRepository implements IVetRepository{
 		
 		return rows_affected;
 	
+	}
+
+	@Override
+	public List<VetEntity> getAllVets() {
+		String query = "SELECT * FROM vet";
+		
+		List<VetEntity> vets = jdbcTemplate.query(query, new VetEntityMapper());
+
+		return vets;
 	}
 
 }

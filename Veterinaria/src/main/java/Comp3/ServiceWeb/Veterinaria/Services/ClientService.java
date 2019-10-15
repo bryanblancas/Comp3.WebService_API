@@ -1,5 +1,6 @@
 package Comp3.ServiceWeb.Veterinaria.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,11 @@ import org.springframework.stereotype.Service;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.AppointmentEntity;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.PetEntity;
 import Comp3.ServiceWeb.Veterinaria.Model.Entity.User_dataEntity;
+import Comp3.ServiceWeb.Veterinaria.Model.Entity.VetEntity;
 import Comp3.ServiceWeb.Veterinaria.Repository.AppointmentRepository;
 import Comp3.ServiceWeb.Veterinaria.Repository.PetRepository;
 import Comp3.ServiceWeb.Veterinaria.Repository.User_dataRepository;
+import Comp3.ServiceWeb.Veterinaria.Repository.VetRepository;
 
 @Service
 public class ClientService {
@@ -22,6 +25,9 @@ public class ClientService {
 	
 	@Autowired
 	User_dataRepository user_dataRepo;
+	
+	@Autowired
+	VetRepository vetRepo;
 	
 	public List<PetEntity> getClientPets(String idUser){
 		return petRepo.findAllPetsByIdUser(idUser);
@@ -53,6 +59,19 @@ public class ClientService {
 	
 	public User_dataEntity findVet(String idVet) {
 		return user_dataRepo.findUserById(idVet);
+	}
+	
+	public List<User_dataEntity> getVetList(){
+		List<User_dataEntity> vetsData = new ArrayList<User_dataEntity>();
+		List<VetEntity> vets = vetRepo.getAllVets();
+		for(VetEntity ve : vets) {
+			vetsData.add(user_dataRepo.findUserById(ve.getIdUser_vet()));
+		}
+		return vetsData;
+	}
+	
+	public int bookAppointment(AppointmentEntity ae) {
+		return appRepo.saveAppointment(ae);
 	}
 	
 }

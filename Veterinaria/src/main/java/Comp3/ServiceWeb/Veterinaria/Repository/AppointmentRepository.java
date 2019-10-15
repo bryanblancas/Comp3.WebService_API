@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +38,31 @@ public class AppointmentRepository implements IAppointmentRepository {
 			System.out.println("DataIntegrityViolationException AppointmentRepository.deleteAppointmentByIdPet()");
 			return -1;
 		}
+		return rows_affected;
+	}
+
+	@Override
+	public int saveAppointment(AppointmentEntity ae) {
+		String query = "INSERT INTO "
+				+ "appointment(day, month, year, vet_idUser_vet, pet_idPet, prescription) "
+				+ "VALUES(?,?,?,?,?,?);";
+		int rows_affected = 0;
+		
+		try {
+			rows_affected = jdbcTemplate.update(
+								query,
+								ae.getDay(),
+								ae.getMonth(),
+								ae.getYear(),
+								ae.getVet_idUser_vet(),
+								ae.getPet_idPet(),
+								ae.getPrescription()
+								);
+		}catch(DuplicateKeyException e) {
+			System.out.println("DuplicateKeyEntry CertificateRepository.saveCertificate()");
+		}
+		catch(DataIntegrityViolationException e) {}
+		
 		return rows_affected;
 	}
 

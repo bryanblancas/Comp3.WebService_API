@@ -28,7 +28,8 @@ public class ClientController {
 	ClientService clientService;
 	
 	@RequestMapping("client/pets")
-	public String showClientPets(Model model, @SessionAttribute("user_data_session") UserDataSession userdatasession) {
+	public String showClientPets(Model model, @SessionAttribute(name="user_data_session", required=false) UserDataSession userdatasession) {
+		if(userdatasession == null) return "redirect:/index";
 		if(userdatasession.getType() == 0) return "redirect:/index";
 		
 		List<PetEntity> petsList = clientService.getClientPets(userdatasession.getUser().getIdUser());
@@ -54,14 +55,26 @@ public class ClientController {
 		}
 		
 		model.addAttribute("pets", pets);
+		
+		/*GET VETS LIST*/
+		String text = "<select name='idVet' id='idVet_form' required>";
+		List<User_dataEntity> vets = clientService.getVetList();
+		
+		for(User_dataEntity ue : vets)
+			text += "<option value='"+ue.getIdUser()+"'>"+ue.getName()+ue.getFirst_lastname()+"</option>";
+		text += "</select>";
+		
+		model.addAttribute("vetsSelect", text);
+		
 		return "/client/pets";
 	}
 	
 	
 	@RequestMapping("/client/delete/{idPet}")
 	@ResponseBody
-	public String deleteByIdPet(Model model, @PathVariable("idPet") int idPet, @SessionAttribute("user_data_session") UserDataSession userdatasession) {
-		if(userdatasession.getType() == 0) return "redirect:/index";
+	public String deleteByIdPet(Model model, @PathVariable("idPet") int idPet, @SessionAttribute(name="user_data_session", required=false) UserDataSession userdatasession) {
+		if(userdatasession == null) return "USERNOTLOGEDIN";
+		if(userdatasession.getType() == 0) return "USERNOTLOGEDIN";
 		
 		int rows_affected = clientService.deleteByIdPet(idPet);
 		
@@ -74,8 +87,9 @@ public class ClientController {
 	
 	@RequestMapping("/client/view/{idPet}")
 	@ResponseBody
-	public String viewAppointments(Model model, @PathVariable("idPet") int idPet, @SessionAttribute("user_data_session") UserDataSession userdatasession) {
-		if(userdatasession.getType() == 0) return "redirect:/index";
+	public String viewAppointments(Model model, @PathVariable("idPet") int idPet, @SessionAttribute(name="user_data_session", required=false) UserDataSession userdatasession) {
+		if(userdatasession == null)	return "USERNOTLOGEDIN";
+		if(userdatasession.getType() == 0) return "USERNOTLOGEDIN";
 		
 		List<AppointmentEntity> appointmentList = clientService.findAllAppointmentOfPet(idPet);
 		String rtn = "EMPTY"; 
@@ -97,7 +111,8 @@ public class ClientController {
 	}
 	
 	@RequestMapping(value = "/client/add/{idUser}", method = RequestMethod.POST)
-	public String addNewPet(Model model, @PathVariable("idUser") String idUser, @SessionAttribute("user_data_session") UserDataSession userdatasession, @RequestParam Map<String, String> allParams) {
+	public String addNewPet(Model model, @PathVariable("idUser") String idUser, @SessionAttribute(name="user_data_session", required=false) UserDataSession userdatasession, @RequestParam Map<String, String> allParams) {
+		if(userdatasession == null)	return "redirect:/index";
 		if(userdatasession.getType() == 0) return "redirect:/index";
 		
 		if(!idUser.equals(userdatasession.getUser().getIdUser()))
@@ -119,10 +134,31 @@ public class ClientController {
 		if(rows_affected == 1)
 			return "redirect:/client/pets";
 		else {
-			model.addAttribute("errorMessage", "No se pudo guardar la mascota");
+			model.addAttribute("errorMessage", "No se pudo guardar la mascota.");
 			return "redirect:/client/pets";
 		}
 		
+	}
+	
+	@RequestMapping(value="/client/bookAppointment", method=RequestMethod.POST)
+	public String bookAppointment(Model model, @RequestParam Map<String, String> allParams) {
+		String date[] = allParams.get("date").split("-");
+		
+		AppointmentEntity ae = new AppointmentEntity(
+				1,
+				Integer.parseInt(date[0]),
+				Integer.parseInt(date[1]),
+				Integer.parseInt(date[2]),
+				allParams.get("idVet"),
+				Integer.parseInt(allParams.get("idPet")),
+				"Aún no establecido"
+			);
+		
+		int rows_affected = clientService.bookAppointment(ae);
+		
+		if(rows_affected != 1)
+			model.addAttribute("erroMessage", "No se pudo agendar la cita");
+		return "redirect:/client/pets";
 	}
 	
 }
