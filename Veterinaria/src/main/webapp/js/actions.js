@@ -14,6 +14,8 @@ $( document ).ready(function() {
 			success:function(result){
 				if(result === "EMPTY")
 					$('#infoAppointment_div').html("<h2>No hay historial médico para tu mascota</h2>");	
+				else if(result === "USERNOTLOGEDIN")
+					window.location.href = "/index";
 				else
 					$('#infoAppointment_div').html(result);
 			},
@@ -23,10 +25,17 @@ $( document ).ready(function() {
 		});
     });
 
+
+
+
     $('a.book').on('click', function(){
     	let id_pet = $(this).attr('id_pet');
-    	alert("book: "+id_pet);
+    	$('#idPet').val(id_pet);
+    	$('#bookAppointment_modal').modal('open');
     });
+
+   
+
 
     $('a.delete').on('click', function(){
     	let id_pet = $(this).attr('id_pet');
@@ -45,6 +54,8 @@ $( document ).ready(function() {
 					$('.infoDelete_h4').text("Error al eliminar mascota");
 					$('.infoDelete_p').text("Ocurrió un error al eliminar a esa mascota");	
 				}
+				else if(result === "USERNOTLOGEDIN")
+					window.location.href = "/index";
 			},
 			error:function(result){
 				$('.infoDelete_h4').text("Error al conectar con el servidor");
@@ -54,18 +65,26 @@ $( document ).ready(function() {
 		$('#infoDelete_modal').modal('open');
     });
 
+
+
+
     $('a.add').on('click', function(){
     	$('#addPet_modal').modal('open');
     });
 
-    $('.modal').modal();
+    
 
+    $('.modal').modal();
 	$('.modal-close.reload').on('click', function() {
     	location.reload()
     });
 
-    $(document).ready(function(){
-    	$('select').formSelect();
+
+    $('select').formSelect();
+  	$('.datepicker').datepicker({
+  		autoClose: true, 
+  		format: "dd-mm-yyyy",
+  		minDate: new Date()
   	});
 
 });
