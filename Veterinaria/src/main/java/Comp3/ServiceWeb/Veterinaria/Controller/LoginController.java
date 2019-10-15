@@ -9,12 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 
@@ -227,10 +226,9 @@ public class LoginController {
 	
 	
 	@RequestMapping(value = "/welcome")
-	public String showWelcomePage(@ModelAttribute(name = "user_data_session") UserDataSession userdatasession) {
-		
-		if(userdatasession.getType() == 0)
-			return "redirect:/index";
+	public String showWelcomePage(@SessionAttribute(name = "user_data_session", required=false) UserDataSession userdatasession) {
+		if(userdatasession == null) return "redirect:/index";
+		if(userdatasession.getType() == 0) return "redirect:/index";
 		
 		if(userdatasession.getType() == 1)
 			return "/client/clientIndex";
