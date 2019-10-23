@@ -30,7 +30,7 @@ public class ClientController {
 	@RequestMapping("client/pets")
 	public String showClientPets(Model model, @SessionAttribute(name="user_data_session", required=false) UserDataSession userdatasession) {
 		if(userdatasession == null) return "redirect:/index";
-		if(userdatasession.getType() == 0) return "redirect:/index";
+		if(userdatasession.getType() == 0 || userdatasession.getType() == 2) return "redirect:/index";
 		
 		List<PetEntity> petsList = clientService.getClientPets(userdatasession.getUser().getIdUser());
 		
@@ -74,7 +74,7 @@ public class ClientController {
 	@ResponseBody
 	public String deleteByIdPet(Model model, @PathVariable("idPet") int idPet, @SessionAttribute(name="user_data_session", required=false) UserDataSession userdatasession) {
 		if(userdatasession == null) return "USERNOTLOGEDIN";
-		if(userdatasession.getType() == 0) return "USERNOTLOGEDIN";
+		if(userdatasession.getType() == 0 || userdatasession.getType() == 2) return "USERNOTLOGEDIN";
 		
 		int rows_affected = clientService.deleteByIdPet(idPet);
 		
@@ -89,7 +89,7 @@ public class ClientController {
 	@ResponseBody
 	public String viewAppointments(Model model, @PathVariable("idPet") int idPet, @SessionAttribute(name="user_data_session", required=false) UserDataSession userdatasession) {
 		if(userdatasession == null)	return "USERNOTLOGEDIN";
-		if(userdatasession.getType() == 0) return "USERNOTLOGEDIN";
+		if(userdatasession.getType() == 0 || userdatasession.getType() == 2) return "USERNOTLOGEDIN";
 		
 		List<AppointmentEntity> appointmentList = clientService.findAllAppointmentOfPet(idPet);
 		String rtn = "EMPTY"; 
@@ -113,7 +113,7 @@ public class ClientController {
 	@RequestMapping(value = "/client/add/{idUser}", method = RequestMethod.POST)
 	public String addNewPet(Model model, @PathVariable("idUser") String idUser, @SessionAttribute(name="user_data_session", required=false) UserDataSession userdatasession, @RequestParam Map<String, String> allParams) {
 		if(userdatasession == null)	return "redirect:/index";
-		if(userdatasession.getType() == 0) return "redirect:/index";
+		if(userdatasession.getType() == 0 || userdatasession.getType() == 2) return "redirect:/index";
 		
 		if(!idUser.equals(userdatasession.getUser().getIdUser()))
 			return "redirect:/logout";
@@ -159,6 +159,15 @@ public class ClientController {
 		if(rows_affected != 1)
 			model.addAttribute("erroMessage", "No se pudo agendar la cita");
 		return "redirect:/client/pets";
+	}
+	
+	
+	@RequestMapping(value="/client/account")
+	public String showClientInfo(Model model, @SessionAttribute(name="user_data_session", required=false) UserDataSession userdatasession) {
+		if(userdatasession == null)	return "redirect:/index";
+		if(userdatasession.getType() == 0 || userdatasession.getType() == 2) return "redirect:/index";
+		
+		return "/client/clientAccount"; 
 	}
 	
 }
