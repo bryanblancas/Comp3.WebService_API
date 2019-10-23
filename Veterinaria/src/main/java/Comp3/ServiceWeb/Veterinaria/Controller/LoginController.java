@@ -233,7 +233,7 @@ public class LoginController {
 		if(userdatasession.getType() == 1)
 			return "/client/clientIndex";
 		
-		return "/vet";
+		return "/vet/vetIndex";
 	
 	}
 	
