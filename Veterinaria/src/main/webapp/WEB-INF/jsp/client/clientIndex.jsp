@@ -19,14 +19,14 @@
 				<a id='logo-container' href='#' class='brand-logo'>Veterinaria</a>
 				<ul class='right hide-on-med-and-down'><li>
 					<li class='active'><a href='#'>Inicio</a></li>
-					<li><a href='#'>Cuenta</a></li>
+					<li><a href='/client/account'>Cuenta</a></li>
 					<li><a href='/client/pets'>Mascotas</a></li>
 					<li><a href='/logout'>Cerrar Sesión</a></li>
 				</ul>
 
 				<ul id='nav-mobile' class='sidenav'>
 					<li class='active'><a href='#'>Inicio</a></li>
-					<li><a href='#'>Cuenta</a></li>
+					<li><a href='/client/account'>Cuenta</a></li>
 					<li><a href='/client/pets'>Mascotas</a></li>
 					<li><a href='/logout'>Cerrar Sesión</a></li>
 				</ul>
@@ -56,7 +56,8 @@
 
 			<div class="row">
 				<div class='row'>
-					<div class='col s12 m4'>
+
+					<div class='col s12 m6'>
 						<div class='icon-block center'>
 							<h5 class='center'>Checar mascotas</h5>
 							<p class='light center-align'>Ve la información de tus mascotas, agenda una cita para ellas o modifica su información.</p>
@@ -64,21 +65,14 @@
 						</div>
 					</div>
 
-					<div class='col s12 m4'>
+					<div class='col s12 m6'>
 						<div class='icon-block center'>
 							<h5 class='center'>Administra tu cuenta</h5>
-							<p class='light center-align'>Consulta tu información,<br> puedes modificarla. <br> Cambia tu contraseña</p>
-							<a href='/account' id='account-button' class='btn-large waves-effect waves-light teal lighten-1'>Cuenta</a>
+							<p class='light center-align'>Consulta tu información, puedes modificarla. <br> Cambia tu contraseña</p>
+							<a href='/client/account' id='account-button' class='btn-large waves-effect waves-light teal lighten-1'>Cuenta</a>
 						</div>
 					</div>
 
-					<div class='col s12 m4'>
-						<div class='icon-block'>
-							<h2 class='center brown-text'><i class='material-icons'>menu_book</i></h2>
-							<h5 class='center'>Historial médico</h5>
-							<p class='light center-align'>Te brindamos un rápido acceso a todos lo procedimientos a los que tus mascotas se han sometido. Revisa y monitorea a tus mascotas.</p>
-						</div>
-					</div>
 				</div>	
 			</div>
 
