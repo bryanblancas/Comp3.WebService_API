@@ -14,6 +14,7 @@ public class WinnowingService implements IWinnowing {
 
 	@Autowired
 	CryptoService cryptoService;
+	
 	@Autowired
 	Base64u base64;
 	
