@@ -24,8 +24,8 @@
 		<div class="container">
 			<h3 class="header center red-text text-lighten-2">ERROR</h3>
 			<div class="row">
-				<marquee direction="down" width="800" height="400"  scrollamount="20" scrolldelay='1' behavior="alternate">
-				 	<marquee behavior="alternate" scrollamount="30" scrolldelay='1'> 
+				<marquee direction="down" width="800" height="400"  scrollamount="50" scrolldelay='1' behavior="alternate">
+				 	<marquee behavior="alternate" scrollamount="50" scrolldelay='1'> 
 				 		<a href='/welcome' id='return-button' class='btn-large waves-effect waves-light red lighten-1'><i class="material-icons">backspace</i></a>
 				 	</marquee>
 				</marquee>
