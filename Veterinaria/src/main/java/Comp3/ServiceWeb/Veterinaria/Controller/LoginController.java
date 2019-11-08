@@ -65,6 +65,9 @@ public class LoginController {
 		data.setChaffing(chaffing);
 		data.setPattern(pattern);
 		
+		// System.out.println(chaffing);
+		// System.out.println(pattern);
+		
 		String rtn = restTemplate.postForObject(getIpAPI(), data, String.class);
 		String[] certAndStatus = rtn.split(" ");
 		
