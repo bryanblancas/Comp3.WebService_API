@@ -1,5 +1,7 @@
 package TT2018B003.comp3.API.Service;
 
+import java.util.Iterator;
+
 import javax.security.cert.CertificateException;
 import javax.security.cert.X509Certificate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,38 +104,42 @@ public class WinnowingService implements IWinnowing {
 		DataModel data = new DataModel(shaUser);		
 	   return restTemplate.postForObject(dirServA+"/api/verificarCertificado", data, String.class);
    }
+   public static int roundUp(int num, int divisor) {
+	    return (num + divisor - 1) / divisor;
+	}
 
 	@Override
 	public String makeWinnowing() {
-		
+		/*
 		String[] patternAndAesKey = pattern.split(" ");
 		String chaffingDecode = base64.decode(chaffing);
 		String aesKey = cryptoService.decryptAESKey(patternAndAesKey[1]);
-		String pattern = cryptoService.decryptPattern(patternAndAesKey[0], aesKey);
+		String pattern = cryptoService.decryptPattern(patternAndAesKey[0], aesKey);*/
 		
+		String[] chaffAndSize = chaffing.split(" ");
+		int sizeCert = Integer.parseInt(chaffAndSize[1]);
+		String chaff = chaffAndSize[0];
+		boolean[] patt = stringtoBoolean(cryptoService.decryptPattern(pattern));
+		System.out.println("patt_s: "+patt.length+" chaff_s: "+chaff.length()+" cert_s:"+sizeCert);
 		/*Winnowing*/
 		
-		boolean[] patt = stringtoBoolean(pattern);
-		boolean[] chaffingByte = stringtoBoolean(chaffingDecode);
-		System.out.println("patt_s: "+patt.length+" chaff_s: "+chaffingByte.length);
 		/*AQUIIII ESTÁ TODO EL TT*/
-		String cab = "";
 		String cert = "";
+		int rep = roundUp(sizeCert,patt.length);
 		try {
-		for(int i = 0 ; i<patt.length ;i++) {
-			if(patt[i]) {
-				cab+=chaffingByte[i] == true ? '1' : '0';
-			}else {
-				cert+=chaffingByte[i] == true ? '1' : '0';
-			}
+			
+		for(int i = 1 ; i<rep ;i++) {
+			for(int j=0; j < patt.length; j++) {
+				if(patt[i]) {
+					cert+= chaff.charAt(i);
+				}	
+			}			
 		}
 		
-		System.out.println("Cabecera: "+arraybytetoString(arraybytetoBite(cab)));
 		
-		byte[] certificado = arraybytetoBite(cert);
-		String certificate = arraybytetoString(certificado).replace("\r", "").replace("\n", "");
+		String certificate = cert.replace("\r", "").replace("\n", "");
 		System.out.println("Cert: "+certificate);
-		String[] dataCert = getDataCert(certificado);	
+		String[] dataCert = getDataCert(cert.getBytes());	
 		//Se verifica si el certificado fue emitido por la AC
 		if(dataCert != null && cryptoService.verifyCertificate(getCert(certificate))==1 ) {
 			String email = dataCert[0].split("=")[1];

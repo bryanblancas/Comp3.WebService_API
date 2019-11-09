@@ -52,12 +52,11 @@ public class CryptoService {
 		return sha;
 	}
 	
-	public String decryptAESKey(String encryptedMessage) {
+	public String decryptPattern(String encryptedMessage) {
 		
 		PrivateKey privKey = null;
 		try {
 			 privKey = getPrivateKey();
-			 //System.out.println(privKey);
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException | IOException e) {
 			System.out.println("Error in CryptoService.decrypt()");
 			e.printStackTrace();
@@ -68,30 +67,14 @@ public class CryptoService {
 			decryptedMessage = rsa.decrypt(encryptedMessage, privKey);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchProviderException | NoSuchPaddingException
 				| IllegalBlockSizeException | BadPaddingException e) {
-			System.out.println("Error in CryptoService.decrypt() : decryptedMessage");
+			System.out.println("Error in CryptoService.decrypt() : decryptedMessage"+e.getMessage());
 			e.printStackTrace();
 		}
         
         return decryptedMessage;
 	}
 	
-	public String decryptPattern(String encryptedPattern, String aesKey) {
-		//aes.setKey(aesKey);
-		String pattern = null;
-		try {
-			
-			pattern = aes.decrypt(encryptedPattern, aesKey);
-		
-		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
-				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			
-			System.out.println("Error en CryptoService.decryptPattern()");
-			e.printStackTrace();
-			
-		}
-		
-		return pattern;
-	}
+	
 
 	public static PrivateKey getPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 		
