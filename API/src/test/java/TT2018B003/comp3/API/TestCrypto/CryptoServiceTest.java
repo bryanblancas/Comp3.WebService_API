@@ -27,14 +27,32 @@ public class CryptoServiceTest {
 	}
 
 	@Test
-
 	public void decryptPattern() {
 
-		String encryptedPattern = "h4cFaqQs7md0JsXJcrNstB5ay+guUUpl8YHxWd1XR7jvDlaKGCmy441Ia4ZkVYgrUR2P1Fep0IkYuwGj1H+PrGWA8aPNF5t3nlR8vmkq2cWEixV+F1+4q9dNAw8ar5+kxAR6b1bdZ6QlZov8rvR2M9HoicH4a30XO10sGtDoqAnKLp2BI7O7PGC324auIWtMObtJLvtM5amRX3u3cdPQOv1WEcMEOmRNHtV6vRt5Ik0i69lLBTl8/77uSbVbLkVFNR0VhOuGV3SWH00zpf5oDA6WPhMlc/ii5UPYG5vWoBmGaB9N+0TxYGJfVlJgXyi6XLrM9oNI495WOZD90kyiiA==";
-
+		//String original = "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
+		String original = "";
+		for(int i = 0; i < 186; i++)
+			original += (char) 0;
+		
+		String encryptedPattern = "cPYBLx7PX4QQufWMW8K9qD8cdmG03vH8fW5Fa234HaFdXqLhVXe514mYfHZe41yzKvxc4eAs1LliJ7DwRBgHSEWYsKhDCUZ5jNxthUNjO0SyOigq+z9H2slpA+AdrEggh70Usg82sE0DVQjjn1AsufvwC4Rotqx77lj6h8vEAwQ8M01z95SC2SxJGhc6N290inT7BwEkwrtwgT4s+PJVCxYuqZQCwfbcD1VmkGyG9TjSgjx8rQ831nwkevCKraKUotaxLsk7QMDn0fJyuIOWVvTE0Hpt3eblNVX4Tiwjy296XDMh1V9fpyQEHRspry07QQENCetY7JbKfUVfuNM5KQ==";
+		//String encryptedPattern1 = "eBtWqfFzoX0SrUufNeu53l+HvSUSm3i1UeVg3ffM8bC2dsxn0QdfUFcTegojABn13vb3Cc1nS/DJeZ9BGVStY6DxR+fmkKjWutyp4XFuBVjJXs59CoKtfvu7NA3vpy8Wf4Oo6/ssYAR2AxtCvjVTJStwwdLGXb0H9XGQtLHMuHuxM2Wdc1bRw8z6xgcuxOBtljXNbCwVz6E9rOSjvTgLWHCLTTGnSwDMfPwRVmo9kT8Z2uwIsC/Ria1B1YMNPRo5OTwC/p8HfduddCeDb8x9ckEXZgEF1/3fPmY18KkqL3ySPQuryHVHOzK4qYsHu+mSBbOP68Z/DCMwoByY7nLUdw==";
+		//String encryptedPattern2 = "KaLey1Mku35Xb8tb522vBx38xgx880lBk2xkizdxVS9maxJcGbL1+zvDNCKb0sH5QYvUuyB89EsF3LYOZsS5CcMrzE2/ju7fP2/9yfG0nSNoAIrJ9hZzYOOidRGCwn5FPPcH3thDbk3q4wlVtQucQR0X8Ojx+y4gd/KvgTtFcFXMCHBvCq7oDT3ztSjDMzjlf4nItB5RLBMVJArRNyNk/9qP7ucqx8NYNYco2AAXKpBDkN3B+s9SK50jSOqeGoavNc2Ejz2hkYdlWlkUT36kdytzzY04P2Ed2YWy0iSwPHRiXEz/FtydxT94T5QU3LEbxgyObMqtjKSXsteGk/6IOw==";
+		//String encryptedPattern3 = "JjrSTPfDU5QlyTbY0p/2BGkrqp1iD1iD1a2FLpO1F17dkMyuamjFmMnkIJHRQYPPv9ahh1OYkcfdxm30fWaEia6jBoXRtVnaDWyoe5fEE41JwogrPgN33SOUG7F+tdmPsvJg044RnN7XTCmVbnC8nGnCBwgOFEGA1Gq5rm7jCZnO0NJ+s/dkKECuywg+Q4mGV9xNqnyresPYSira+RyaFs8Eii6fltfkeDSBFbnu6GaU/9CstNT2GMPXvmnnEnmSMxGPF5DD9q2FnZAh1JGi/ZgnN1oXAnBsKuU38BQpiy2DFlfDZbohU9W+NaOuuNPX//9UgkLxRi//oke5XA8jOg==";
+		//String encryptedPattern4 = "cIvQQEf7vErqHQ9Sb4IVL6iMUhj26Dvemgf4cQ601j2A8hj+UfjMDPEiy05DEKscyG/THqVF0/pNg/lg7GLb/R16YnQggPX4KoPvLLs+EyTALm7GBYfq7BCINGBZ23V48jjI0VolXlywa9UgA5M73xLpACSGpnerE3aq8c1lBCY/KQR/fDnUpxlVgchOYBoAgAsy26n6dh9Pa1CgeEJHBUk6YjWtLEdPCgD6qScjbkCH8SmUteE3GiK1tqOLFSuVKGlgfYkG0yrcz1Cgtjd6LTQVUPVBQFZtBt5lErVCKonzBwXhWX7KiicHhbZnpaossWrSbrz/RNbeRHYeiDh9NQ==";
+		
 		String pattern = cryptoService.decryptPattern(encryptedPattern);
-		System.out.println(pattern);
-		Assert.assertEquals("hola mundo", pattern);
+		//String pattern1 = cryptoService.decryptPattern(encryptedPattern1);
+		//String pattern2 = cryptoService.decryptPattern(encryptedPattern2);
+		//String pattern3 = cryptoService.decryptPattern(encryptedPattern3);
+		//String pattern4 = cryptoService.decryptPattern(encryptedPattern4);
+		
+		
+		//System.out.println(pattern);
+		Assert.assertEquals(original, pattern);
+		//Assert.assertEquals(original, pattern1);
+		//Assert.assertEquals(original, pattern2);
+		//Assert.assertEquals(original, pattern3);
+		//Assert.assertEquals(original, pattern4);
 	}
 
 	@Test

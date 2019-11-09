@@ -46,16 +46,15 @@ public class WinnowingService implements IWinnowing {
     }
 
     private static boolean[] stringtoBoolean(String patt) {
-        boolean[] out = new boolean[patt.length() * 8];
+    	boolean[] out = new boolean[patt.length() * 8];
 
-        	for(int i = 0; i < patt.length(); i++) {
-        		int val = patt.charAt(i);
-        		for(int j = 0 ; j < 8 ; j++) {
-        			out[(i*8) + j] = (val & 128) == 0 ? false : true;
-        			val <<= 1;
-        		}
-        	}
-        
+    	for(int i = 0; i < patt.length(); i++) {
+    		int val = patt.charAt(i);
+    		for(int j = 0 ; j < 8 ; j++) {
+    			out[(i*8) + j] = (val & 128) == 0 ? false : true;
+    			val <<= 1;
+    		}
+    	}
         
         return out;
     }
@@ -119,8 +118,11 @@ public class WinnowingService implements IWinnowing {
 		String[] chaffAndSize = chaffing.split(" ");
 		int sizeCert = Integer.parseInt(chaffAndSize[1]);
 		String chaff = chaffAndSize[0];
-		boolean[] patt = stringtoBoolean(cryptoService.decryptPattern(pattern));
+		
+		String patternstr = cryptoService.decryptPattern(pattern);
+		boolean[] patt = stringtoBoolean(patternstr);
 		System.out.println("patt_s: "+patt.length+" chaff_s: "+chaff.length()+" cert_s:"+sizeCert);
+		
 		/*Winnowing*/
 		
 		/*AQUIIII ESTÁ TODO EL TT*/
@@ -147,7 +149,10 @@ public class WinnowingService implements IWinnowing {
 		
 			System.out.println("SHA_CERT:");			
 			String shaCert = cryptoService.doSHA(certificate);			
-			String response = validateCert(shaEmail);
+			
+			// Comment this in order to do local test, without Comp2
+			//String response = validateCert(shaEmail);
+			String response = cryptoService.doSHA(certificate);
 			
 			System.out.println(certificate+" : "+response);
 			if(response.equals("0")) {

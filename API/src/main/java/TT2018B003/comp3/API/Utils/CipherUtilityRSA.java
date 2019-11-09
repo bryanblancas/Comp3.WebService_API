@@ -45,11 +45,11 @@ public class CipherUtilityRSA {
 	
 	public String decrypt(String cipherContent, Key privKey) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		Cipher cipher = Cipher.getInstance("RSA");
-	    	cipher.init(Cipher.DECRYPT_MODE, privKey);
-	    	byte[] cipherContentBytes = Base64.getDecoder().decode(cipherContent.getBytes());
-	    	byte[] decryptedContent = cipher.doFinal(cipherContentBytes);
-	    	String decoded = new String(decryptedContent);
-	    	return decoded;
+    	cipher.init(Cipher.DECRYPT_MODE, privKey);
+    	byte[] cipherContentBytes = Base64.getDecoder().decode(cipherContent.getBytes());
+    	byte[] decryptedContent = cipher.doFinal(cipherContentBytes);
+    	String decoded = new String(decryptedContent);
+    	return decoded;
 	}
 	
 	public String encodeKey(Key key) {
