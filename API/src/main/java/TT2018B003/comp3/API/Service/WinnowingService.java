@@ -23,7 +23,7 @@ public class WinnowingService implements IWinnowing {
 	private String chaffing;
 	private String pattern;
 	
-	private static String dirServA = "http://10.100.64.79:3001";
+	private static String dirServA = "http://192.168.43.179:3001";
 	@Override
 	public void setChaffing(String chaffing) {
 		this.chaffing = chaffing;
@@ -57,6 +57,15 @@ public class WinnowingService implements IWinnowing {
     	}
         
         return out;
+    }
+    
+    private static int numOne(boolean[] x) {
+    	int count=0;
+    	for(boolean w : x) {
+    		if(w == true)
+    			count++;
+    	}
+    	return count;
     }
     
     private static byte[] arraybytetoBite(String array) {
@@ -103,17 +112,9 @@ public class WinnowingService implements IWinnowing {
 		DataModel data = new DataModel(shaUser);		
 	   return restTemplate.postForObject(dirServA+"/api/verificarCertificado", data, String.class);
    }
-   public static int roundUp(int num, int divisor) {
-	    return (num + divisor - 1) / divisor;
-	}
 
 	@Override
 	public String makeWinnowing() {
-		/*
-		String[] patternAndAesKey = pattern.split(" ");
-		String chaffingDecode = base64.decode(chaffing);
-		String aesKey = cryptoService.decryptAESKey(patternAndAesKey[1]);
-		String pattern = cryptoService.decryptPattern(patternAndAesKey[0], aesKey);*/
 		
 		String[] chaffAndSize = chaffing.split(" ");
 		int sizeCert = Integer.parseInt(chaffAndSize[1]);
@@ -121,20 +122,24 @@ public class WinnowingService implements IWinnowing {
 		
 		String patternstr = cryptoService.decryptPattern(pattern);
 		boolean[] patt = stringtoBoolean(patternstr);
-		System.out.println("patt_s: "+patt.length+" chaff_s: "+chaff.length()+" cert_s:"+sizeCert);
+		System.out.println("patt_s: "+patt.length+" chaff_s: "+chaff.length()+" cert_s:"+sizeCert+"num1: "+numOne(patt));
 		
 		/*Winnowing*/
 		
 		/*AQUIIII ESTÁ TODO EL TT*/
 		String cert = "";
-		int rep = roundUp(sizeCert,patt.length);
+		
+		
 		try {
-			
-		for(int i = 1 ; i<rep ;i++) {
+		int rep = (int) Math.ceil((double)sizeCert/(double)numOne(patt));
+		for(int i = 0 ; i<rep ;i++) {
 			for(int j=0; j < patt.length; j++) {
-				if(patt[i]) {
-					cert+= chaff.charAt(i);
-				}	
+				if(cert.length()==sizeCert)
+					break;
+				if(patt[j]) {
+					cert+= chaff.charAt(j+(patt.length*i));
+				}
+				
 			}			
 		}
 		
@@ -151,8 +156,8 @@ public class WinnowingService implements IWinnowing {
 			String shaCert = cryptoService.doSHA(certificate);			
 			
 			// Comment this in order to do local test, without Comp2
-			//String response = validateCert(shaEmail);
-			String response = cryptoService.doSHA(certificate);
+			String response = validateCert(shaEmail);
+			//String response = cryptoService.doSHA(certificate);
 			
 			System.out.println(certificate+" : "+response);
 			if(response.equals("0")) {
@@ -160,7 +165,7 @@ public class WinnowingService implements IWinnowing {
 				return "0 0";
 			} else if(response.equals(shaCert)) {
 				System.out.println("Certificado válido");
-				return certificate+" 1";
+				return shaCert+" 1";
 			} else {
 				System.out.println("El usuario cambió de certificado");
 				return"0 2";
