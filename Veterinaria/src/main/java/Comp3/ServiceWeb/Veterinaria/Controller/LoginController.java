@@ -135,6 +135,7 @@ public class LoginController {
 			UserDataSession userdatasession = loginService.getUserDataSessionById(ce.getUser_data_idUser());
 			model.addAttribute("user_data_session", userdatasession);
 			ipServer = getIpServer()+"/welcome";
+			certificate = null;
 		}
 		else 
 			ipServer = getIpServer()+"/showForm";
